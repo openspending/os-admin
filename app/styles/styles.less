@@ -1,0 +1,222 @@
+html {
+  background: #131518;
+  height: 100%;
+}
+
+textarea {
+  resize: none;
+}
+
+textarea.resize-vertical {
+  resize: vertical;
+}
+textarea.resize-horizontal {
+  resize: horizontal;
+}
+textarea.resize-vertical.resize-horizontal,
+textarea.resize-both {
+  resize: both;
+}
+
+.without-margins {
+  margin: 0;
+}
+
+.margin-side-x(@side, @multiplier: 10) when (@multiplier > 0) {
+  @n: @multiplier * 4;
+  .margin-@{side}-@{n} {
+    margin-@{side}: unit(@n, px);
+  }
+  .margin-side-x(@side, (@multiplier - 1));
+}
+
+.margin-side-x(top);
+.margin-side-x(right);
+.margin-side-x(bottom);
+.margin-side-x(left);
+
+.padding-side-x(@side, @multiplier: 10) when (@multiplier > 0) {
+  @n: @multiplier * 4;
+  .padding-@{side}-@{n} {
+    padding-@{side}: unit(@n, px);
+  }
+  .padding-side-x(@side, (@multiplier - 1));
+}
+
+.padding-side-x(top);
+.padding-side-x(right);
+.padding-side-x(bottom);
+.padding-side-x(left);
+
+.padding-top-15 {
+  padding-top: 15px;
+}
+
+.navbar.x-page-header {
+  .navbar-brand {
+    width: 23%;
+    padding: 0;
+  }
+
+  .os-icon-arrow-drop-down {
+    font-size: 130%;
+  }
+
+  span.os-logo-part {
+    font-size: 34px;
+    font-weight: bold;
+    margin-left: 7px;
+    padding-top: 0;
+    margin-top: 15px;
+  }
+}
+
+.x-user-info {
+  position: absolute;
+  right: 0;
+  z-index: 999;
+  background: #131518;
+  display: table;
+  table-layout: auto;
+  width: auto;
+
+  .x-avatar {
+    vertical-align: top;
+    display: table-cell;
+    width: 1%;
+    padding: 1em;
+
+    img {
+      max-width: 5em;
+      max-height: 5em;
+    }
+  }
+
+  .x-info {
+    vertical-align: top;
+    display: table-cell;
+    padding: 1em;
+    padding-left: 0;
+
+    div {
+      white-space: nowrap;
+    }
+
+    strong {
+      color: #fff;
+    }
+
+    a {
+      color: darken(#fff, 40%);
+      text-decoration: none;
+
+      &:hover,
+      &:active {
+        color: #fff;
+      }
+    }
+  }
+}
+
+@color: #f7f7f7;
+
+.x-page-container {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  background: #f5f5f5;
+
+  > div {
+    display: table-row;
+  }
+
+  .x-sidebar {
+    background: #2a2d34;
+    display: table-cell;
+    vertical-align: top;
+    width: 23%;
+    padding: 0.5em 0;
+
+    strong {
+      font-size: 70%;
+      color: #777;
+      margin: 0 15px;
+      display: block;
+    }
+
+    hr {
+      border-color: #666;
+      margin: 0.5em 0;
+    }
+
+    .list-group {
+      margin-bottom: 0;
+    }
+
+    .os-icon-remove {
+      font-size: 130%;
+    }
+
+    .os-icon-arrow-down {
+      font-size: 130%;
+      transition: transform 0.35s linear;
+      transform: rotate(-90deg);
+
+      &.expanded {
+        transform: rotate(0deg);
+      }
+    }
+  }
+
+  .x-content {
+    display: table-cell;
+    width: 77%;
+    vertical-align: top;
+    background: #f5f5f5;
+
+    .form-group {
+      position: relative;
+    }
+  }
+}
+
+.x-footer-help {
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+  background: #fff;
+
+  p {
+    margin: 5px 0;
+  }
+
+  .os-icon {
+    font-size: 200%;
+    vertical-align: middle;
+    display: inline-block;
+    margin: -5px 10px 0 0;
+  }
+}
+
+.navbar.navbar-footer {
+
+  .x-footer-icons {
+    margin-left: 1em;
+
+    img {
+      max-height: 1.5em;
+      vertical-align: middle;
+      margin-left: -0.5em;
+    }
+  }
+
+  .x-footer-okfn-logo {
+    path {
+      fill: #999;
+    }
+
+    &:hover path {
+      fill: #fff;
+    }
+  }
+
+}
