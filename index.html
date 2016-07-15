@@ -61,9 +61,14 @@
 <!-- BEGIN: Page Contents -->
 <div ng-cloak ng-if="isLoaded.application" class="x-page-container">
 <div>
-  <div class="x-sidebar">Sidebar</div>
+  <div class="x-sidebar">
+    <sidebar selected="state.page"></sidebar>
+  </div>
 
-  <div class="x-content"><h1>Page contents</h1></div>
+  <div class="x-content" ng-switch="state.page">
+    <user-profile ng-switch-when="profile" profile="login"></user-profile>
+    <user-datasets ng-switch-when="datasets"></user-datasets>
+  </div>
 
 </div>
 </div>

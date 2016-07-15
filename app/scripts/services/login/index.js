@@ -4,8 +4,8 @@ var angular = require('angular');
 
 angular.module('Application')
   .factory('LoginService', [
-    'authenticate', 'authorize', '$window',
-    function(authenticate, authorize, $window) {
+    '$q', 'authenticate', 'authorize', '$window',
+    function($q, authenticate, authorize, $window) {
       var that = this;
 
       this.reset = function() {
@@ -22,15 +22,31 @@ angular.module('Application')
       var isEventRegistered = false;
       var attempting = false;
       var href = null;
+      var isInitialCheckDone = false;
 
       this.getToken = function() {
         return token;
+      };
+
+      this.tryGetToken = function() {
+        return $q(function(resolve, reject) {
+          var check = function() {
+            if (isInitialCheckDone) {
+              var token = that.getToken();
+              token ? resolve(token) : reject(new Error('Not logged in'));
+            } else {
+              setTimeout(check, 50);
+            }
+          };
+          check();
+        });
       };
 
       this.check = function() {
         var next = $window.location.href;
         authenticate.check(next)
           .then(function(response) {
+            isInitialCheckDone = true;
             attempting = false;
             token = response.token;
             that.isLoggedIn = true;
@@ -47,6 +63,7 @@ angular.module('Application')
               });
           })
           .catch(function(providers) {
+            isInitialCheckDone = true;
             if (!isEventRegistered) {
               $window.addEventListener('focus', function() {
                 if (!that.isLoggedIn && attempting) {

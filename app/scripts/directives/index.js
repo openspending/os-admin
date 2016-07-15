@@ -1,3 +1,5 @@
 'use strict';
 
-module.exports.test = require('./test');
+require('./sidebar');
+require('./user-profile');
+require('./user-datasets');
