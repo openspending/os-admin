@@ -11,6 +11,7 @@ angular.module('Application')
       this.reset = function() {
         that.isLoggedIn = false;
         that.name = null;
+        that.username = null;
         that.email = null;
         that.avatar = null;
         that.permissions = null;
@@ -51,6 +52,7 @@ angular.module('Application')
             token = response.token;
             that.isLoggedIn = true;
             that.name = response.profile.name;
+            that.username = response.profile.username;
             that.email = response.profile.email;
             // jscs:disable
             that.avatar = response.profile.avatar_url;

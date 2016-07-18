@@ -16,10 +16,20 @@ application.constant('Configuration', config);
 
 require('../services/login');
 
-application.run([
-  '$rootScope', 'LoginService',
-  function($rootScope, LoginService) {
-    $rootScope.isLoaded = {};
-    $rootScope.login = LoginService;
-  }
-]);
+application
+  .config([
+    '$httpProvider', '$compileProvider', '$logProvider', 'markedProvider',
+    function($httpProvider, $compileProvider, $logProvider, markedProvider) {
+      $compileProvider.aHrefSanitizationWhitelist(
+        /^\s*(https?|ftp|mailto|file|javascript):/);
+      $logProvider.debugEnabled(true);
+      markedProvider.setOptions({gfm: true});
+    }
+  ])
+  .run([
+    '$rootScope', 'LoginService',
+    function($rootScope, LoginService) {
+      $rootScope.isLoaded = {};
+      $rootScope.login = LoginService;
+    }
+  ]);

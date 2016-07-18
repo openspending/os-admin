@@ -3,13 +3,15 @@
 var angular = require('angular');
 var template = require('./template.html');
 
+var osAdminService = require('../../services/os-admin');
+
 require('./save-username-modal');
 
 var application = angular.module('Application');
 
 application.directive('userProfile', [
-  'Configuration',
-  function(Configuration) {
+  'Configuration', 'LoginService',
+  function(Configuration, LoginService) {
     return {
       restrict: 'E',
       replace: false,
@@ -32,7 +34,10 @@ application.directive('userProfile', [
         $scope.$on(Configuration.events.profile.usernameModalAccept,
           function() {
             $scope.profile.username = $scope.profileModel.username;
-            // TODO: Update username via API
+            var token = LoginService.getToken();
+            osAdminService.updateUserProfile(token, {
+              username: $scope.profileModel.username
+            });
           });
       }
     };
