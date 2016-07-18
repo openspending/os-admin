@@ -7,8 +7,8 @@ var $q = require('../services/ng-utils').$q;
 var application = angular.module('Application');
 
 application.controller('MainController', [
-  '$scope', 'LoginService',
-  function($scope, LoginService) {
+  '$scope', 'LoginService', 'Configuration',
+  function($scope, LoginService, Configuration) {
     $scope.state = {
       page: 'profile'
     };
@@ -32,7 +32,6 @@ application.controller('MainController', [
       .then(function(dataPackages) {
         $scope.isLoaded.packages = true;
         $scope.dataPackages = dataPackages;
-        console.log(dataPackages);
       })
       .catch(function() {
         LoginService.login();

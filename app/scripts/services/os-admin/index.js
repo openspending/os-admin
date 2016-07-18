@@ -31,12 +31,13 @@ function updateUserProfile(authToken, profileData) {
   var options = {
     method: 'POST'
   };
-  return fetch(url + '?' + data, options).then(function(result) {
-    if (!result.success) {
-      throw new Error(result.error);
-    }
-    return profileData;
-  });
+  return downloader.getJson(url + '?' + data, options, true)
+    .then(function(result) {
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+      return profileData;
+    });
 }
 
 function getDataPackageMetadata(dataPackage) {
@@ -56,6 +57,7 @@ function getDataPackageMetadata(dataPackage) {
     title: dataPackage.package.title,
     description: dataPackage.package.description,
     owner: dataPackage.package.owner,
+    isPublished: !dataPackage.package.private,
     author: _.chain(dataPackage.package.author)
       .split(' ')
       .dropRight(1)
@@ -90,10 +92,43 @@ function getDataPackages(authToken) {
     url += '&jwt=' + encodeURIComponent(authToken);
   }
   return downloader.getJson(url).then(function(packages) {
-    return _.map(packages, getDataPackageMetadata);
+    return _.chain(packages)
+      .map(getDataPackageMetadata)
+      .sortBy(function(item) {
+        return item.title;
+      })
+      .value();
   });
+}
+
+function togglePackagePublicationStatus(permissionToken, dataPackage) {
+  var url = module.exports.conductorUrl + '/package/publish';
+
+  var data = _.chain({
+      jwt: permissionToken,
+      id: dataPackage.id,
+      publish: 'toggle'
+    })
+    .map(function(value, key) {
+      return encodeURIComponent(key) + '=' + encodeURIComponent(value);
+    })
+    .join('&')
+    .value();
+
+  var options = {
+    method: 'POST'
+  };
+  return downloader.getJson(url + '?' + data, options, true)
+    .then(function(result) {
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+      dataPackage.isPublished = !!result.published;
+      return dataPackage;
+    });
 }
 
 module.exports.getSettings = getSettings;
 module.exports.updateUserProfile = updateUserProfile;
 module.exports.getDataPackages = getDataPackages;
+module.exports.togglePackagePublicationStatus = togglePackagePublicationStatus;

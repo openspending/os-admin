@@ -1,28 +1,35 @@
 <div class="container-fluid margin-top-12 margin-bottom-12">
-  <div class="row">
-    <div class="form-group col-xs-12 col-sm-8">
-      <label for="profile-email">EMail</label>
-      <input type="text" id="profile-email" readonly="readonly" class="form-control"
-        ng-model="profileModel.email">
-      <p class="help-block">This is the email address which you use as login.</p>
+  <div class="media">
+    <div class="media-left">
+      <img class="media-object" ng-src="{{ profile.avatar }}">
     </div>
-  </div>
+    <div class="media-body">
+      <div class="form-group">
+        <h4 class="media-heading">{{ profile.name }}</h4>
+      </div>
 
-  <div class="row">
-    <div class="form-group col-xs-12 col-sm-8">
-      <label for="profile-username">Username</label>
-      <div ng-class="{'input-group': !profile.username}">
-        <input type="text" id="profile-username" class="form-control"
-          ng-model="profileModel.username"
-          ng-readonly="!!profile.username"
-          placeholder="Modify your username.">
+      <div class="form-group">
+        <label for="profile-email">EMail</label>
+        <input type="text" id="profile-email" readonly="readonly" class="form-control"
+          ng-model="profileModel.email">
+        <p class="help-block">This is the email address which you use as login.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="profile-username">Username</label>
+        <div ng-class="{'input-group': !profile.username}">
+          <input type="text" id="profile-username" class="form-control"
+            ng-model="profileModel.username"
+            ng-readonly="!!profile.username"
+            placeholder="Modify your username.">
         <span ng-if="!profile.username" class="input-group-btn">
           <button class="btn btn-default"
             ng-disabled="!profileModel.username"
             ng-click="saveUsername()" type="button">Save</button>
         </span>
+        </div>
+        <p ng-if="!profile.username" class="help-block">You can change your username only once!</p>
       </div>
-      <p ng-if="!profile.username" class="help-block">You can change your username only once!</p>
     </div>
   </div>
 </div>

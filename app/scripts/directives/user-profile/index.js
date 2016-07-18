@@ -3,6 +3,7 @@
 var angular = require('angular');
 var template = require('./template.html');
 
+var $q = require('../../services/ng-utils').$q;
 var osAdminService = require('../../services/os-admin');
 
 require('./save-username-modal');
@@ -35,9 +36,9 @@ application.directive('userProfile', [
           function() {
             $scope.profile.username = $scope.profileModel.username;
             var token = LoginService.getToken();
-            osAdminService.updateUserProfile(token, {
+            $q(osAdminService.updateUserProfile(token, {
               username: $scope.profileModel.username
-            });
+            }));
           });
       }
     };

@@ -3,12 +3,16 @@
 var angular = require('angular');
 var template = require('./template.html');
 
+var $q = require('../../services/ng-utils').$q;
+var osAdminService = require('../../services/os-admin');
+
 require('./package-resources');
 
 var application = angular.module('Application');
 
 application.directive('userDatasets', [
-  function() {
+  'LoginService',
+  function(LoginService) {
     return {
       restrict: 'E',
       replace: false,
@@ -37,11 +41,47 @@ application.directive('userDatasets', [
         }
 
         $scope.metrics = getMetrics($scope.packages);
-        $scope.$watch('packages', function(newValue, oldValue) {
-          if (newValue !== oldValue) {
-            $scope.metrics = getMetrics($scope.packages);
-          }
+        $scope.$watchCollection('packages', function() {
+          $scope.metrics = getMetrics($scope.packages);
         });
+
+        function getFilters(filters) {
+          var result = {};
+          if (filters.title) {
+            result.title = filters.title;
+          }
+          if (filters.isPublished !== null) {
+            result.isPublished = filters.isPublished;
+          }
+          return result;
+        }
+
+        $scope.filters = {
+          title: '',
+          isPublished: null
+        };
+        $scope.actualFilters = getFilters($scope.filters);
+        $scope.$watch('filters', function(newValue, oldValue) {
+          if (newValue !== oldValue) {
+            $scope.actualFilters = getFilters($scope.filters);
+          }
+        }, true);
+
+        $scope.togglePublicationStatus = function(packageId) {
+          var dataPackage = _.find($scope.packages, {
+            id: packageId
+          });
+          if (dataPackage) {
+            dataPackage.isUpdating = true;
+            var token = LoginService.permissionToken;
+            $q(osAdminService.togglePackagePublicationStatus(token,
+              dataPackage))
+              .finally(function() {
+                dataPackage.isUpdating = false;
+                $scope.metrics = getMetrics($scope.packages);
+              });
+          }
+        };
       }
     };
   }

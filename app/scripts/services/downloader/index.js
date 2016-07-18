@@ -6,17 +6,25 @@ var Promise = require('bluebird');
 var cache = {};
 
 module.exports = {
-  get: function(url) {
-    if (!cache[url]) {
-      cache[url] = fetch(url).then(function(response) {
+  get: function(url, options, bypassCache) {
+    if (bypassCache || !cache[url]) {
+      var requestPromise = fetch(url, options).then(function(response) {
+        if (response.status != 200) {
+          throw 'Failed loading data from ' + response.url;
+        }
         return response.text();
       });
+
+      if (bypassCache) {
+        return requestPromise;
+      }
+      cache[url] = requestPromise;
     }
     return new Promise(function(resolve, reject) {
       cache[url].then(resolve).catch(reject);
     });
   },
-  getJson: function(url) {
-    return this.get(url).then(JSON.parse);
+  getJson: function(url, options, bypassCache) {
+    return this.get(url, options, bypassCache).then(JSON.parse);
   }
 };
