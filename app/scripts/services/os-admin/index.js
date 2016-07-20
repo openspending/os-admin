@@ -86,11 +86,12 @@ function getDataPackageMetadata(dataPackage) {
   };
 }
 
-function getDataPackages(authToken) {
+function getDataPackages(authToken, userid) {
   var url = module.exports.searchUrl + '?size=10000';
   if (authToken) {
     url += '&jwt=' + encodeURIComponent(authToken);
   }
+  url += '&package.owner=' + encodeURIComponent(JSON.stringify(userid));
   return downloader.getJson(url).then(function(packages) {
     return _.chain(packages)
       .map(getDataPackageMetadata)
