@@ -21,7 +21,6 @@ angular.module('Application')
       this.reset();
 
       var token = null;
-      var isEventRegistered = false;
       var attempting = false;
       var href = null;
       var isInitialCheckDone = false;
@@ -72,14 +71,6 @@ angular.module('Application')
           })
           .catch(function(providers) {
             isInitialCheckDone = true;
-            if (!isEventRegistered) {
-              $window.addEventListener('focus', function() {
-                if (!that.isLoggedIn && attempting) {
-                  that.check();
-                }
-              });
-              isEventRegistered = true;
-            }
             href = providers.google.url;
           });
       };
