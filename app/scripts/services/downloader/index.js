@@ -26,5 +26,8 @@ module.exports = {
   },
   getJson: function(url, options, bypassCache) {
     return this.get(url, options, bypassCache).then(JSON.parse);
+  },
+  clearCache: function() {
+    cache = {};
   }
 };
