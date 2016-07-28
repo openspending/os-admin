@@ -82,6 +82,21 @@ application.directive('userDatasets', [
               });
           }
         };
+
+        $scope.runWebHooks = function(packageId) {
+          var dataPackage = _.find($scope.packages, {
+            id: packageId
+          });
+          if (dataPackage) {
+            dataPackage.isRunningWebhooks = true;
+            var token = LoginService.permissionToken;
+            $q(osAdminService.runWebHooks(token,dataPackage))
+              .finally(function() {
+                dataPackage.isRunningWebhooks = false;
+              });
+          }
+        };
+
       }
     };
   }
