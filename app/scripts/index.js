@@ -16,7 +16,7 @@ var _ = require('lodash');
   // fetch() polyfill
   require('isomorphic-fetch/fetch-npm-browserify');
 
-  require('os-bootstrap/dist/js/bootstrap');
+  require('os-bootstrap/dist/js/os-bootstrap');
 
   var angular = require('angular');
   globals.angular = angular;
