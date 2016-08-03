@@ -86,11 +86,12 @@ function getDataPackageMetadata(dataPackage) {
   };
 }
 
-function getDataPackages(authToken) {
+function getDataPackages(authToken, userid) {
   var url = module.exports.searchUrl + '?size=10000';
   if (authToken) {
     url += '&jwt=' + encodeURIComponent(authToken);
   }
+  url += '&package.owner=' + encodeURIComponent(JSON.stringify(userid));
   return downloader.getJson(url).then(function(packages) {
     return _.chain(packages)
       .map(getDataPackageMetadata)
@@ -128,7 +129,33 @@ function togglePackagePublicationStatus(permissionToken, dataPackage) {
     });
 }
 
+function runWebHooks(permissionToken, dataPackage) {
+  var url = module.exports.conductorUrl + '/package/run-hooks';
+
+  var data = _.chain({
+      jwt: permissionToken,
+      id: dataPackage.id
+    })
+    .map(function(value, key) {
+      return encodeURIComponent(key) + '=' + encodeURIComponent(value);
+    })
+    .join('&')
+    .value();
+
+  var options = {
+    method: 'POST'
+  };
+  return downloader.getJson(url + '?' + data, options, true)
+    .then(function(result) {
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+      return dataPackage;
+    });
+}
+
 module.exports.getSettings = getSettings;
 module.exports.updateUserProfile = updateUserProfile;
 module.exports.getDataPackages = getDataPackages;
 module.exports.togglePackagePublicationStatus = togglePackagePublicationStatus;
+module.exports.runWebHooks = runWebHooks;

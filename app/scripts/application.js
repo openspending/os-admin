@@ -7,8 +7,11 @@ require('angular-animate');
 angular.module('Application', [
   'ngAnimate',
   'hc.marked',
-  'authClient.services'
-]);
+  'authClient.services'])
+  .config(['$locationProvider',
+  function ($locationProvider) {
+    $locationProvider.html5Mode(true)
+  }]);
 
 require('./config');
 require('./controllers');

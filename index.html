@@ -6,6 +6,7 @@
 
   <link rel="stylesheet" href="public/styles/vendor.css">
   <link rel="stylesheet" href="public/styles/app.css">
+  <base href="admin"/>
 </head>
 <body ng-controller="MainController">
 
@@ -25,22 +26,22 @@
             Login / Register
           </a>
         </li>
-        <li ng-if="login.isLoggedIn" ng-cloak>
-          <a href="javascript:void(0);" ng-click="isLoginMenuShown = !isLoginMenuShown">
-            <i class="os-icon os-icon-user"></i>
-            {{ login.name }}
-            <i class="os-icon os-icon-arrow-drop-down"></i>
-          </a>
-          <div ng-show="isLoginMenuShown" class="x-user-info">
-            <div class="x-avatar">
-              <img class="pull-left" ng-if="!!login.avatar" ng-src="{{ login.avatar }}">
-            </div>
-            <div class="x-info">
-              <div><strong>{{ login.name }}</strong></div>
-              <div><a href="javascript:void(0);" ng-click="login.logout()">Logout</a></div>
-            </div>
-          </div>
-        </li>
+        <!--<li ng-if="login.isLoggedIn" ng-cloak>-->
+          <!--<a href="javascript:void(0);" ng-click="isLoginMenuShown = !isLoginMenuShown">-->
+            <!--<i class="os-icon os-icon-user"></i>-->
+            <!--{{ login.name }}-->
+            <!--<i class="os-icon os-icon-arrow-drop-down"></i>-->
+          <!--</a>-->
+          <!--<div ng-show="isLoginMenuShown" class="x-user-info">-->
+            <!--<div class="x-avatar">-->
+              <!--<img class="pull-left" ng-if="!!login.avatar" ng-src="{{ login.avatar }}">-->
+            <!--</div>-->
+            <!--<div class="x-info">-->
+              <!--<div><strong>{{ login.name }}</strong></div>-->
+              <!--<div><a href="javascript:void(0);" ng-click="login.logout()">Logout</a></div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</li>-->
       </ul>
       <span class="navbar-brand navbar-brand-warning navbar-brand-black"
         title="OS Admin" target="_self"><img src="public/assets/os.svg" class="os-logo-part"><span class="os-logo-part">Admin</span></span>

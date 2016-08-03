@@ -27,7 +27,7 @@ application.controller('MainController', [
         osAdminService.conductorUrl = settings.conductorUrl;
         osAdminService.searchUrl = settings.searchUrl;
 
-        return $q(osAdminService.getDataPackages(LoginService.getToken()));
+        return $q(osAdminService.getDataPackages(LoginService.getToken(), LoginService.getUserId()));
       })
       .then(function(dataPackages) {
         $scope.isLoaded.packages = true;
