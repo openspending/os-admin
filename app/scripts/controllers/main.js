@@ -24,6 +24,7 @@ application.controller('MainController', [
         $scope.isLoaded.application = true;
 
         $scope.viewerUrl = settings.viewerUrl;
+        $scope.packagerUrl = settings.packagerUrl;
         osAdminService.conductorUrl = settings.conductorUrl;
         osAdminService.searchUrl = settings.searchUrl;
 

@@ -20,7 +20,8 @@ application.directive('userDatasets', [
       scope: {
         packages: '=',
         loaded: '@',
-        viewerUrl: '@'
+        viewerUrl: '@',
+        packagerUrl: '@'
       },
       link: function($scope) {
         function getMetrics(packages) {
