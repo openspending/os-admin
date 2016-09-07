@@ -48,7 +48,8 @@
       <tr>
         <th class="text-nowrap">Title</th>
         <th class="text-nowrap text-center" width="1%">Publication status</th>
-        <th class="text-nowrap" width="1%">View</th>
+        <th class="text-nowrap" width="1%" ng-if="!!packagerUrl">Edit</th>
+        <th class="text-nowrap" width="1%" ng-if="!!viewerUrl">View</th>
         <th class="text-nowrap" width="1%">Download</th>
         <th class="text-nowrap" width="1%">Hooks</th>
       </tr>
@@ -72,8 +73,13 @@
             {{ package.isPublished ? 'Make Private' : 'Publish' }}
           </button>
         </td>
-        <td class="text-nowrap">
-          <i class="os-icon os-icon-treemap margin-right-4"></i><a ng-href="{{ viewerUrl + '/' + package.id }}" target="_blank">Open in Viewer</a>
+        <td class="text-nowrap" ng-if="!!packagerUrl">
+          <a class="btn btn-default" title="Edit in Packager" target="_blank"
+            ng-href="{{ packagerUrl + '/provide-data/?package=' + package.url }}"><i class="fa fa-pencil"></i></a>
+        </td>
+        <td class="text-nowrap" ng-if="!!viewerUrl">
+          <a class="btn btn-default" title="Open in Viewer" target="_blank"
+            ng-href="{{ viewerUrl + '/' + package.id }}" target="_blank"><i class="fa fa-eye"></i></a>
         </td>
         <td><package-resources package="package"></package-resources></td>
         <td class="text-center">
