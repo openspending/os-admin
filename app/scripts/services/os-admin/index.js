@@ -91,7 +91,9 @@ function getDataPackages(authToken, userid) {
   if (authToken) {
     url += '&jwt=' + encodeURIComponent(authToken);
   }
-  url += '&package.owner=' + encodeURIComponent(JSON.stringify(userid));
+  if (userid) {
+    url += '&package.owner=' + encodeURIComponent(JSON.stringify(userid));
+  }
   return downloader.getJson(url).then(function(packages) {
     return _.chain(packages)
       .map(getDataPackageMetadata)

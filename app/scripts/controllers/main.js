@@ -7,11 +7,16 @@ var $q = require('../services/ng-utils').$q;
 var application = angular.module('Application');
 
 application.controller('MainController', [
-  '$scope', 'LoginService', 'Configuration',
-  function($scope, LoginService, Configuration) {
+  '$scope', '$location', 'LoginService', 'Configuration',
+  function($scope, $location, LoginService, Configuration) {
     $scope.state = {
       page: 'profile'
     };
+
+    $scope.highlightPackage = $location.search().hl;
+    $scope.$on('$locationChangeSuccess', function() {
+      $scope.highlightPackage = $location.search().hl;
+    });
 
     LoginService.tryGetToken()
       .then(function() {
@@ -28,7 +33,10 @@ application.controller('MainController', [
         osAdminService.conductorUrl = settings.conductorUrl;
         osAdminService.searchUrl = settings.searchUrl;
 
-        return $q(osAdminService.getDataPackages(LoginService.getToken(), LoginService.getUserId()));
+        return $q(osAdminService.getDataPackages(
+          LoginService.getToken(),
+          LoginService.getUserId()
+        ));
       })
       .then(function(dataPackages) {
         $scope.isLoaded.packages = true;
