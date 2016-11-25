@@ -62,8 +62,12 @@
       </tr>
     </tbody>
     <tbody ng-if="loaded">
-      <tr ng-repeat="package in (packages | filter:actualFilters) track by package.id">
-        <td>{{ package.title }}</td>
+      <tr ng-repeat="package in (packages | filter:actualFilters) track by package.id"
+        ng-class="{warning: package.id == highlightPackage}">
+        <td>
+          {{ package.title }}
+          <span ng-if="package.id == highlightPackage" class="label label-warning margin-left-8">new</span>
+        </td>
         <td class="text-center">
           <button type="button" class="text-nowrap btn"
             ng-class="{'btn-warning': !package.isPublished, 'btn-default': package.isPublished}"

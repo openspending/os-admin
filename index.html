@@ -69,6 +69,7 @@
   <div class="x-content" ng-switch="state.page">
     <user-profile ng-switch-when="profile" profile="login"></user-profile>
     <user-datasets ng-switch-when="datasets" packages="dataPackages"
+      highlight-package="{{ highlightPackage }}"
       loaded="{{ isLoaded.packages }}"
       viewer-url="{{ viewerUrl }}"
       packager-url="{{ packagerUrl }}"></user-datasets>
