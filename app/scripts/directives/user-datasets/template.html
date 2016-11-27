@@ -65,8 +65,28 @@
       <tr ng-repeat="package in (packages | filter:actualFilters) track by package.id"
         ng-class="{warning: package.id == highlightPackage}">
         <td>
-          {{ package.title }}
-          <span ng-if="package.id == highlightPackage" class="label label-warning margin-left-8">new</span>
+          <div>
+            {{ package.title }}
+            <span ng-if="package.id == highlightPackage" class="label label-warning margin-left-8">new</span>
+          </div>
+
+          <div ng-if="!package.loadingStatus.loaded && !package.loadingStatus.failed"
+            class="alert alert-warning padding-8 without-margins margin-top-8">
+            <i class="fa fa-spinner fa-pulse"></i>
+            {{ package.loadingStatus.message }}
+          </div>
+          <div ng-if="package.loadingStatus.loaded && package.loadingStatus.showMessage"
+            class="alert alert-success padding-8 without-margins margin-top-8">
+            <button class="close" ng-click="package.loadingStatus.showMessage = false">&times;</button>
+            <i class="fa fa-check-circle-o"></i>
+            {{ package.loadingStatus.message }}
+          </div>
+          <div ng-if="package.loadingStatus.failed && package.loadingStatus.showMessage"
+            class="alert alert-danger padding-8 without-margins margin-top-8">
+            <button class="close" ng-click="package.loadingStatus.showMessage = false">&times;</button>
+            <div><strong>{{ package.loadingStatus.message }}</strong></div>
+            <span style="word-break: break-all" ng-if="!!package.loadingStatus.error">{{ package.loadingStatus.error }}</span>
+          </div>
         </td>
         <td class="text-center">
           <button type="button" class="text-nowrap btn"
