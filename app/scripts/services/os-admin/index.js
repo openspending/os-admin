@@ -116,7 +116,7 @@ function getDataPackageMetadata(dataPackage) {
       });
       if (result.countOfRecords == 0) {
         // jscs:disable
-        var count = parseInt(dataPackage.count_of_rows, 10) || 0;
+        var count = parseInt(dataPackage.package.count_of_rows, 10) || 0;
         // jscs:enable
         if (count > 0) {
           result.countOfRecords = count;
