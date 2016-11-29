@@ -74,6 +74,19 @@
             class="alert alert-warning padding-8 without-margins margin-top-8">
             <i class="fa fa-spinner fa-pulse"></i>
             {{ package.loadingStatus.message }}
+            <div ng-if="package.loadingStatus.processedRecords > 0" class="margin-top-4">
+              <div ng-if="package.loadingStatus.countOfRecords == 0"
+                ng-pluralize
+                count="package.loadingStatus.processedRecords"
+                when="{1: '{} record processed', 'other': '{} records processed'}"
+              ></div>
+
+              <progress-bar ng-if="package.loadingStatus.countOfRecords > 0"
+                ng-class="'progress-small'"
+                value="{{ package.loadingStatus.processedRecords / package.loadingStatus.countOfRecords * 100 }}"
+                label="{{ (package.loadingStatus.processedRecords / package.loadingStatus.countOfRecords * 100 | numberFormat:2) + '%' }}"
+              ></progress-bar>
+            </div>
           </div>
           <div ng-if="package.loadingStatus.loaded && package.loadingStatus.showMessage"
             class="alert alert-success padding-8 without-margins margin-top-8">

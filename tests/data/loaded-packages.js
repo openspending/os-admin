@@ -17,7 +17,9 @@ module.exports = [
       status: 'done',
       message: 'Done',
       error: null,
-      showMessage: false
+      showMessage: false,
+      countOfRecords: 0,
+      processedRecords: 0
     },
     resources: [
       {
@@ -43,7 +45,9 @@ module.exports = [
       status: 'done',
       message: 'Done',
       error: null,
-      showMessage: false
+      showMessage: false,
+      countOfRecords: 0,
+      processedRecords: 0
     },
     resources: [
       {

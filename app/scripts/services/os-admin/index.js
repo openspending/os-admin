@@ -103,6 +103,26 @@ function getDataPackageMetadata(dataPackage) {
       // Show UI message for failed and in-progress packages
       result.showMessage = !result.loaded;
 
+      // Calculate count of rows (if available)
+      result.countOfRecords = 0;
+      result.processedRecords = 0;
+      _.each(dataPackage.package.resources, function(resource) {
+        // jscs:disable
+        var count = parseInt(resource.count_of_rows, 10) || 0;
+        // jscs:enable
+        if (count > 0) {
+          result.countOfRecords += count;
+        }
+      });
+      if (result.countOfRecords == 0) {
+        // jscs:disable
+        var count = parseInt(dataPackage.count_of_rows, 10) || 0;
+        // jscs:enable
+        if (count > 0) {
+          result.countOfRecords = count;
+        }
+      }
+
       return result;
     })(),
     author: _.chain(dataPackage.package.author)
@@ -152,7 +172,14 @@ function getDataPackageLoadingStatus(dataPackage) {
       if (responseStatus == 'fail') {
         throw new Error(response.error); // Go to .catch()
       } else {
-        return responseStatus;
+        var progress = parseInt(response.progress, 10) || 0;
+        if (progress < 0) {
+          progress = 0;
+        }
+        return {
+          status: responseStatus,
+          progress: progress
+        };
       }
     });
 }
@@ -163,29 +190,43 @@ function pollPackageStatus(dataPackage, dataPackageUpdatedCallback) {
     // If package was not loaded and there is no error - it's still loading
     if (!status.loaded && !status.error) {
       dataPackage.loadingStatus.showMessage = true;
+      dataPackage.loadingStatus.processedRecords = 0;
       var poll = function() {
         getDataPackageLoadingStatus(dataPackage)
-          .then(function(status) {
-            dataPackage.loadingStatus.loaded = status == 'done';
-            dataPackage.loadingStatus.failed = false;
-            dataPackage.loadingStatus.status = status;
-            dataPackage.loadingStatus.message = RemoteProcessingStatus[status];
-            dataPackage.loadingStatus.error = null;
+          .then(function(result) {
+            var loadingStatus = dataPackage.loadingStatus;
+
+            loadingStatus.loaded = result.status == 'done';
+            loadingStatus.failed = false;
+            loadingStatus.status = result.status;
+            loadingStatus.message = RemoteProcessingStatus[result.status];
+            loadingStatus.error = null;
+            loadingStatus.processedRecords = result.progress;
+
+            if (loadingStatus.processedRecords > loadingStatus.countOfRecords) {
+              if (loadingStatus.countOfRecords > 0) {
+                loadingStatus.processedRecords = loadingStatus.countOfRecords;
+              }
+            }
 
             if (_.isFunction(dataPackageUpdatedCallback)) {
               dataPackageUpdatedCallback(dataPackage);
             }
 
-            if (status != 'done') {
+            if (result.status != 'done') {
               setTimeout(poll, module.exports.pollInterval);
+            } else {
+              loadingStatus.processedRecords = loadingStatus.countOfRecords;
             }
           })
           .catch(function(error) {
-            dataPackage.loadingStatus.loaded = false;
-            dataPackage.loadingStatus.failed = true;
-            dataPackage.loadingStatus.status = 'fail';
-            dataPackage.loadingStatus.message = RemoteProcessingStatus.fail;
-            dataPackage.loadingStatus.error = error.message;
+            var loadingStatus = dataPackage.loadingStatus;
+
+            loadingStatus.loaded = false;
+            loadingStatus.failed = true;
+            loadingStatus.status = 'fail';
+            loadingStatus.message = RemoteProcessingStatus.fail;
+            loadingStatus.error = error.message;
 
             if (_.isFunction(dataPackageUpdatedCallback)) {
               dataPackageUpdatedCallback(dataPackage);
