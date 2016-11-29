@@ -20,3 +20,4 @@ require('./config');
 require('./controllers');
 require('./directives');
 require('./animations');
+require('./filters');

@@ -9,12 +9,22 @@ module.exports = [
     owner: '583b10ad15f2e7f078afd3431c2c09ea',
     isPublished: true,
     author: 'Levko Kravets',
-    url: 'http://datastore.openspending.org/' +
+    url: 'http://s3.amazonaws.com/datastore.openspending.org/' +
       '583b10ad15f2e7f078afd3431c2c09ea/test/datapackage.json',
+    loadingStatus: {
+      loaded: true,
+      failed: false,
+      status: 'done',
+      message: 'Done',
+      error: null,
+      showMessage: false,
+      countOfRecords: 0,
+      processedRecords: 0
+    },
     resources: [
       {
         name: 'boost-moldova-all',
-        url: 'http://datastore.openspending.org/' +
+        url: 'http://s3.amazonaws.com/datastore.openspending.org/' +
           '583b10ad15f2e7f078afd3431c2c09ea/test/boost-moldova-all.csv'
       }
     ]
@@ -27,12 +37,22 @@ module.exports = [
     owner: '583b10ad15f2e7f078afd3431c2c09ea',
     isPublished: true,
     author: 'Levko Kravets',
-    url: 'http://datastore.openspending.org/' +
+    url: 'http://s3.amazonaws.com/datastore.openspending.org/' +
       '583b10ad15f2e7f078afd3431c2c09ea/test2/datapackage.json',
+    loadingStatus: {
+      loaded: true,
+      failed: false,
+      status: 'done',
+      message: 'Done',
+      error: null,
+      showMessage: false,
+      countOfRecords: 0,
+      processedRecords: 0
+    },
     resources: [
       {
         name: 'test',
-        url: 'http://datastore.openspending.org/' +
+        url: 'http://s3.amazonaws.com/datastore.openspending.org/' +
           '583b10ad15f2e7f078afd3431c2c09ea/test2/test.csv'
       }
     ]

@@ -1,5 +1,6 @@
 'use strict';
 
 require('./sidebar');
+require('./progress-bar');
 require('./user-profile');
 require('./user-datasets');

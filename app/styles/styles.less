@@ -34,10 +34,19 @@ textarea.resize-both {
   .margin-side-x(@side, (@multiplier - 1));
 }
 
+.margin-x(@multiplier: 10) when (@multiplier > 0) {
+  @n: @multiplier * 4;
+  .margin-@{n} {
+    margin: unit(@n, px);
+  }
+  .margin-x((@multiplier - 1));
+}
+
 .margin-side-x(top);
 .margin-side-x(right);
 .margin-side-x(bottom);
 .margin-side-x(left);
+.margin-x();
 
 .padding-side-x(@side, @multiplier: 10) when (@multiplier > 0) {
   @n: @multiplier * 4;
@@ -47,10 +56,19 @@ textarea.resize-both {
   .padding-side-x(@side, (@multiplier - 1));
 }
 
+.padding-x(@multiplier: 10) when (@multiplier > 0) {
+  @n: @multiplier * 4;
+  .padding-@{n} {
+    padding: unit(@n, px);
+  }
+  .padding-x((@multiplier - 1));
+}
+
 .padding-side-x(top);
 .padding-side-x(right);
 .padding-side-x(bottom);
 .padding-side-x(left);
+.padding-x();
 
 .padding-top-15 {
   padding-top: 15px;
@@ -227,4 +245,13 @@ textarea.resize-both {
     }
   }
 
+}
+
+.progress.progress-small {
+  height: 14px;
+
+  .progress-bar {
+    font-size: 10px;
+    line-height: 16px;
+  }
 }

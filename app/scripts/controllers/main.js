@@ -7,8 +7,8 @@ var $q = require('../services/ng-utils').$q;
 var application = angular.module('Application');
 
 application.controller('MainController', [
-  '$scope', '$location', 'LoginService', 'Configuration',
-  function($scope, $location, LoginService, Configuration) {
+  '$scope', '$location', 'LoginService',
+  function($scope, $location, LoginService) {
     $scope.state = {
       page: 'profile'
     };
@@ -35,7 +35,11 @@ application.controller('MainController', [
 
         return $q(osAdminService.getDataPackages(
           LoginService.getToken(),
-          LoginService.getUserId()
+          LoginService.getUserId(),
+          function(d) {
+            // This callback will be called on package loading status update
+            $scope.$applyAsync();
+          }
         ));
       })
       .then(function(dataPackages) {
