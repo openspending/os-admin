@@ -1,134 +1,124 @@
-<div class="container-fluid margin-top-12 margin-bottom-12">
-  <div class="row margin-bottom-20">
-    <div class="col-xs-12 col-sm-4">
-      <div>Number of uploaded datasets</div>
-      <div class="text-large">
-        <span ng-if="!loaded"><i class="fa fa-spinner fa-pulse"></i></span>
-        <span class="text-warning" ng-if="loaded">{{ metrics.total }}</span>
-      </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-      <div>Number of published datasets</div>
-      <div class="text-large">
-        <span ng-if="!loaded"><i class="fa fa-spinner fa-pulse"></i></span>
-        <span ng-if="loaded">{{ metrics.published }}</span>
-      </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-      <div>Number of hidden datasets</div>
-      <div class="text-large">
-        <span ng-if="!loaded"><i class="fa fa-spinner fa-pulse"></i></span>
-        <span ng-if="loaded">{{ metrics.hidden }}</span>
-      </div>
-    </div>
-  </div>
+<div>
 
-  <div class="margin-bottom-12">
-    <div class="input-group">
-      <span class="input-group-addon"><i class="fa fa-search"></i></span>
-      <input type="text" class="form-control" placeholder="Search datasets"
-        ng-model="filters.title">
-    </div>
-  </div>
+<div class="app-search">
+  <label for="search-datasets">Search datasets</label>
+  <input id="search-datasets" class="search-field"
+    ng-model="filter.title"
+    placeholder="enter keywords from dataset title" type="text">
+</div>
 
-  <div class="margin-bottom-20">
-    <a href="javascript:void(0)" class="text-nowrap margin-right-20" ng-click="filters.isPublished = true">
-      <i ng-if="filters.isPublished === true" class="fa fa-check-circle-o margin-right-4"></i>Show only published datasets
-    </a>
-    <a href="javascript:void(0)" class="text-nowrap margin-right-20" ng-click="filters.isPublished = false">
-      <i ng-if="filters.isPublished === false" class="fa fa-check-circle-o margin-right-4"></i>Show only private datasets
-    </a>
-    <a href="javascript:void(0)" class="text-nowrap margin-right-20" ng-click="filters.isPublished = null">
-      <i ng-if="filters.isPublished === null" class="fa fa-check-circle-o margin-right-4"></i>Show all datasets
-    </a>
-  </div>
-
-  <table class="table table-bordered table-condensed table-striped">
+<div class="dataset-list">
+  <table>
     <thead>
-      <tr>
-        <th class="text-nowrap">Title</th>
-        <th class="text-nowrap text-center" width="1%">Publication status</th>
-        <th class="text-nowrap" width="1%" ng-if="!!packagerUrl">Edit</th>
-        <th class="text-nowrap" width="1%" ng-if="!!viewerUrl">View</th>
-        <th class="text-nowrap" width="1%">Download</th>
-        <th class="text-nowrap" width="1%">Hooks</th>
-      </tr>
+    <tr>
+      <th class="title"><span>Title</span></th>
+      <th class="status"><span>Publication status</span></th>
+      <th class="actions"><span>Actions</span></th>
+    </tr>
     </thead>
+
     <tbody ng-if="!loaded">
-      <tr>
-        <td colspan="4" class="text-center" style="padding: 1.5em;">
-          <i class="fa fa-4x fa-spinner fa-pulse"></i>
-        </td>
-      </tr>
+    <tr>
+      <td colspan="3" class="text-center" style="padding: 1.5em;">
+        <i class="fa fa-4x fa-spinner fa-pulse"></i>
+      </td>
+    </tr>
     </tbody>
+
     <tbody ng-if="loaded">
-      <tr ng-repeat="package in (packages | filter:actualFilters) track by package.id"
-        ng-class="{warning: package.id == highlightPackage}">
-        <td>
-          <div>
-            {{ package.title }}
-            <span ng-if="package.id == highlightPackage" class="label label-warning margin-left-8">new</span>
-          </div>
+    <tr ng-if="(packages | filter:filter).length == 0">
+      <td colspan="3"><strong>No items.</strong></td>
+    </tr>
+    <tr ng-repeat="package in (packages | filter:filter) track by package.id"
+      ng-class="{warning: package.id == highlightPackage}">
+      <td>
+        <div>
+          <span>{{ package.title }}</span>
+          <span ng-if="package.id == highlightPackage" class="label label-warning margin-left-8">new</span>
+        </div>
 
-          <div ng-if="!package.loadingStatus.loaded && !package.loadingStatus.failed"
-            class="alert alert-warning padding-8 without-margins margin-top-8">
-            <i class="fa fa-spinner fa-pulse"></i>
-            {{ package.loadingStatus.message }}
-            <div ng-if="package.loadingStatus.processedRecords > 0" class="margin-top-4">
-              <div ng-if="package.loadingStatus.countOfRecords == 0"
-                ng-pluralize
-                count="package.loadingStatus.processedRecords"
-                when="{1: '{} record processed', 'other': '{} records processed'}"
-              ></div>
+        <div ng-if="!package.loadingStatus.loaded && !package.loadingStatus.failed"
+          class="alert alert-warning padding-8 without-margins margin-top-8">
+          <i class="fa fa-spinner fa-pulse"></i>
+          {{ package.loadingStatus.message }}
+          <div ng-if="package.loadingStatus.processedRecords > 0" class="margin-top-4">
+            <div ng-if="package.loadingStatus.countOfRecords == 0"
+              ng-pluralize
+              count="package.loadingStatus.processedRecords"
+              when="{1: '{} record processed', 'other': '{} records processed'}"
+            ></div>
 
-              <progress-bar ng-if="package.loadingStatus.countOfRecords > 0"
-                ng-class="'progress-small'"
-                value="{{ package.loadingStatus.processedRecords / package.loadingStatus.countOfRecords * 100 }}"
-                label="{{ (package.loadingStatus.processedRecords / package.loadingStatus.countOfRecords * 100 | numberFormat:2) + '%' }}"
-              ></progress-bar>
-            </div>
+            <progress-bar ng-if="package.loadingStatus.countOfRecords > 0"
+              ng-class="'progress-small'"
+              value="{{ package.loadingStatus.processedRecords / package.loadingStatus.countOfRecords * 100 }}"
+              label="{{ (package.loadingStatus.processedRecords / package.loadingStatus.countOfRecords * 100 | numberFormat:2) + '%' }}"
+            ></progress-bar>
           </div>
-          <div ng-if="package.loadingStatus.loaded && package.loadingStatus.showMessage"
-            class="alert alert-success padding-8 without-margins margin-top-8">
-            <button class="close" ng-click="package.loadingStatus.showMessage = false">&times;</button>
-            <i class="fa fa-check-circle-o"></i>
-            {{ package.loadingStatus.message }}
-          </div>
-          <div ng-if="package.loadingStatus.failed && package.loadingStatus.showMessage"
-            class="alert alert-danger padding-8 without-margins margin-top-8">
-            <button class="close" ng-click="package.loadingStatus.showMessage = false">&times;</button>
-            <div><strong>{{ package.loadingStatus.message }}</strong></div>
-            <span style="word-break: break-all" ng-if="!!package.loadingStatus.error">{{ package.loadingStatus.error }}</span>
-          </div>
-        </td>
-        <td class="text-center">
-          <button type="button" class="text-nowrap btn"
-            ng-class="{'btn-warning': !package.isPublished, 'btn-default': package.isPublished}"
-            ng-click="togglePublicationStatus(package.id)"
-            ng-disabled="package.isUpdating">
-            <span ng-if="package.isUpdating"><i class="fa fa-spinner fa-pulse margin-right-4"></i></span>
-            {{ package.isPublished ? 'Make Private' : 'Publish' }}
-          </button>
-        </td>
-        <td class="text-nowrap" ng-if="!!packagerUrl">
-          <a class="btn btn-default" title="Edit in Packager" target="_blank"
-            ng-href="{{ packagerUrl + '/provide-data/?package=' + package.url }}"><i class="fa fa-pencil"></i></a>
-        </td>
-        <td class="text-nowrap" ng-if="!!viewerUrl">
-          <a class="btn btn-default" title="Open in Viewer" target="_blank"
-            ng-href="{{ viewerUrl + '/' + package.id }}" target="_blank"><i class="fa fa-eye"></i></a>
-        </td>
-        <td><package-resources package="package"></package-resources></td>
-        <td class="text-center">
-          <button type="button" class="text-nowrap btn"
-                  ng-class="{'btn-warning': !package.isRunningWebhooks, 'btn-default': package.isRunningWebhooks}"
-                  ng-click="runWebHooks(package.id)"
-                  ng-disabled="package.isRunningWebhooks">
-            <span ng-if="package.isRunningWebhooks"><i class="fa fa-spinner fa-pulse margin-right-4"></i></span>
-            Run External Hooks
-          </button>
-        </td>
-      </tr>
+        </div>
+        <div ng-if="package.loadingStatus.loaded && package.loadingStatus.showMessage"
+          class="alert alert-success padding-8 without-margins margin-top-8">
+          <button class="close" ng-click="package.loadingStatus.showMessage = false">&times;</button>
+          <i class="fa fa-check-circle-o"></i>
+          {{ package.loadingStatus.message }}
+        </div>
+        <div ng-if="package.loadingStatus.failed && package.loadingStatus.showMessage"
+          class="alert alert-danger padding-8 without-margins margin-top-8">
+          <button class="close" ng-click="package.loadingStatus.showMessage = false">&times;</button>
+          <div><strong>{{ package.loadingStatus.message }}</strong></div>
+          <span style="word-break: break-all" ng-if="!!package.loadingStatus.error">{{ package.loadingStatus.error }}</span>
+        </div>
+      </td>
+      <td class="status" ng-if="package.isPublished"><span class="label label-primary">Published</span></td>
+      <td class="status" ng-if="!package.isPublished"><span class="label label-warning">Private</span></td>
+      <td class="status" ng-if="package.isRunningWebhooks"><span class="label label-primary">
+        <i class="fa fa-spinner fa-pulse margin-right-4"></i> Running webhooks...
+      </span></td>
+      <td class="actions">
+        <ul>
+          <li ng-if="package.isPublished" class="make-private">
+            <a href="javascript:void(0)" ng-click="togglePublicationStatus(package.id)">Make private</a>
+          </li>
+          <li ng-if="!package.isPublished" class="publish">
+            <a href="javascript:void(0)" ng-click="togglePublicationStatus(package.id)">Publish</a>
+          </li>
+          <li class="edit" ng-if="!!packagerUrl">
+            <a data-toggle="tooltip" bootstrap-tooltip data-placement="top" title="Edit"
+              ng-href="{{ packagerUrl + '/provide-data/?package=' + package.url }}"><svg><use xlink:href="#icon-edit" /></svg><span>Edit</span></a>
+          </li>
+          <li class="view"ng-if="!!viewerUrl">
+            <a data-toggle="tooltip" bootstrap-tooltip data-placement="top" title="View"
+              ng-href="{{ viewerUrl + '/' + package.id }}" target="_blank"><svg><use xlink:href="#icon-open" /></svg><span>View</span></a>
+          </li>
+          <li class="download context" ng-init="dropdown.isDownloadVisible = false">
+            <a data-toggle="tooltip" bootstrap-tooltip ng-click="dropdown.isDownloadVisible = !dropdown.isDownloadVisible" data-placement="top" title="Download">
+              <svg><use xlink:href="#icon-download"/></svg><span>Download</span>
+            </a>
+            <ul ng-class="{active: dropdown.isDownloadVisible}">
+              <li class="package">
+                <a ng-href="{{ package.url }}" target="_blank"
+                  ng-click="dropdown.isDownloadVisible = false">Data package</a>
+              </li>
+              <li class="raw">
+                <a ng-href="{{ package.resources[0].url }}" target="_blank"
+                  ng-click="dropdown.isDownloadVisible = false">Raw source data</a>
+              </li>
+            </ul>
+          </li>
+          <li class="more context" ng-init="dropdown.isMoreVisible = false">
+            <a ng-click="dropdown.isMoreVisible = !dropdown.isMoreVisible"><svg><use xlink:href="#icon-more" /></svg><span>More</span></a>
+            <ul ng-class="{active: dropdown.isMoreVisible}">
+              <li class="run">
+                <a href="javascript:void(0)"
+                  ng-disabled="package.isRunningWebhooks"
+                  ng-click="runWebHooks(package.id); dropdown.isMoreVisible = false;">Run external hooks</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </td>
+    </tr>
     </tbody>
   </table>
+</div>
+
 </div>

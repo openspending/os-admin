@@ -1,0 +1,3 @@
+aside .accordion li.filter .submenu a.active:after {
+  content: none;
+}

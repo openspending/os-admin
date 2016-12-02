@@ -1,37 +1,31 @@
-<div class="container-fluid margin-top-12 margin-bottom-12">
-  <div class="media">
-    <div class="media-left">
-      <img class="media-object" ng-src="{{ profile.avatar }}">
-    </div>
-    <div class="media-body">
-      <div class="form-group">
-        <h4 class="media-heading">{{ profile.name }}</h4>
+<div class="modal fade" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Edit Profile</h4>
+        <hr>
       </div>
+      <div class="modal-body">
+        <div class="form">
+          <label for="profile-email">Email</label>
+          <input id="profile-email" placeholder="user@example.com" type="email"
+            readonly="readonly" ng-model="profileModel.email">
+          <p class="help-block">This is the email address which you use as login.</p>
 
-      <div class="form-group">
-        <label for="profile-email">EMail</label>
-        <input type="text" id="profile-email" readonly="readonly" class="form-control"
-          ng-model="profileModel.email">
-        <p class="help-block">This is the email address which you use as login.</p>
-      </div>
-
-      <div class="form-group">
-        <label for="profile-username">Username</label>
-        <div ng-class="{'input-group': !profile.username}">
-          <input type="text" id="profile-username" class="form-control"
+          <label for="profile-username">Username</label>
+          <input id="profile-username" placeholder="Modify your username." type="text"
             ng-model="profileModel.username"
-            ng-readonly="!!profile.username"
-            placeholder="Modify your username.">
-        <span ng-if="!profile.username" class="input-group-btn">
-          <button class="btn btn-default"
-            ng-disabled="!profileModel.username"
-            ng-click="saveUsername()" type="button">Save</button>
-        </span>
+            ng-readonly="!!profile.username">
+
+          <p ng-if="!profile.username" class="help-block ng-scope">You can change your username only once!</p>
         </div>
-        <p ng-if="!profile.username" class="help-block">You can change your username only once!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+        <button ng-if="!profile.username" type="button"
+          ng-click="saveUsername()" class="btn btn-sm btn-primary">Save changes</button>
       </div>
     </div>
   </div>
 </div>
-
-<save-username-modal visible="state.isModalVisible"></save-username-modal>
