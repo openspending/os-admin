@@ -30,46 +30,11 @@
       <td colspan="3"><strong>No items.</strong></td>
     </tr>
     <tr ng-repeat="package in (packages | filter:filter) track by package.id"
-      ng-class="{warning: package.id == highlightPackage}">
-      <td>
-        <div>
-          <span>{{ package.title }}</span>
-          <span ng-if="package.id == highlightPackage" class="label label-warning margin-left-8">new</span>
-        </div>
-
-        <div ng-if="!package.loadingStatus.loaded && !package.loadingStatus.failed"
-          class="alert alert-warning padding-8 without-margins margin-top-8">
-          <i class="fa fa-spinner fa-pulse"></i>
-          {{ package.loadingStatus.message }}
-          <div ng-if="package.loadingStatus.processedRecords > 0" class="margin-top-4">
-            <div ng-if="package.loadingStatus.countOfRecords == 0"
-              ng-pluralize
-              count="package.loadingStatus.processedRecords"
-              when="{1: '{} record processed', 'other': '{} records processed'}"
-            ></div>
-
-            <progress-bar ng-if="package.loadingStatus.countOfRecords > 0"
-              ng-class="'progress-small'"
-              value="{{ package.loadingStatus.processedRecords / package.loadingStatus.countOfRecords * 100 }}"
-              label="{{ (package.loadingStatus.processedRecords / package.loadingStatus.countOfRecords * 100 | numberFormat:2) + '%' }}"
-            ></progress-bar>
-          </div>
-        </div>
-        <div ng-if="package.loadingStatus.loaded && package.loadingStatus.showMessage"
-          class="alert alert-success padding-8 without-margins margin-top-8">
-          <button class="close" ng-click="package.loadingStatus.showMessage = false">&times;</button>
-          <i class="fa fa-check-circle-o"></i>
-          {{ package.loadingStatus.message }}
-        </div>
-        <div ng-if="package.loadingStatus.failed && package.loadingStatus.showMessage"
-          class="alert alert-danger padding-8 without-margins margin-top-8">
-          <button class="close" ng-click="package.loadingStatus.showMessage = false">&times;</button>
-          <div><strong>{{ package.loadingStatus.message }}</strong></div>
-          <span style="word-break: break-all" ng-if="!!package.loadingStatus.error">{{ package.loadingStatus.error }}</span>
-        </div>
-      </td>
+      ng-class="{highlighted: package.id == highlightPackage}">
+      <td><span>{{ package.title }}</span></td>
       <td class="status" ng-if="package.isPublished"><span class="label label-primary">Published</span></td>
       <td class="status" ng-if="!package.isPublished"><span class="label label-warning">Private</span></td>
+      <td class="status" ng-if="package.id == highlightPackage"><span class="label label-success">New</span></td>
       <td class="status" ng-if="package.isRunningWebhooks"><span class="label label-primary">
         <i class="fa fa-spinner fa-pulse margin-right-4"></i> Running webhooks...
       </span></td>
@@ -115,6 +80,38 @@
             </ul>
           </li>
         </ul>
+      </td>
+
+      <td class="status full-width" ng-if="!package.loadingStatus.loaded && !package.loadingStatus.failed">
+        <div class="alert alert-warning package-loading-status">
+          <div><i class="fa fa-spinner fa-pulse margin-right-5"></i><strong>{{ package.loadingStatus.message }}</strong></div>
+          <div ng-if="package.loadingStatus.processedRecords > 0" class="margin-top-4">
+            <div ng-if="package.loadingStatus.countOfRecords == 0"
+              ng-pluralize
+              count="package.loadingStatus.processedRecords"
+              when="{1: '{} record processed', 'other': '{} records processed'}"
+            ></div>
+
+            <progress-bar ng-if="package.loadingStatus.countOfRecords > 0"
+              ng-class="'progress-small'"
+              value="{{ package.loadingStatus.processedRecords / package.loadingStatus.countOfRecords * 100 }}"
+              label="{{ (package.loadingStatus.processedRecords / package.loadingStatus.countOfRecords * 100 | numberFormat:2) + '%' }}"
+            ></progress-bar>
+          </div>
+        </div>
+      </td>
+      <td class="status full-width" ng-if="package.loadingStatus.loaded && package.loadingStatus.showMessage">
+        <div class="alert alert-success package-loading-status">
+          <button class="close" ng-click="package.loadingStatus.showMessage = false">&times;</button>
+          <div><i class="fa fa-check-circle-o margin-right-5"></i><strong>{{ package.loadingStatus.message }}</strong></div>
+        </div>
+      </td>
+      <td class="status full-width" ng-if="package.loadingStatus.failed && package.loadingStatus.showMessage">
+        <div class="alert alert-danger package-loading-status">
+          <button class="close" ng-click="package.loadingStatus.showMessage = false">&times;</button>
+          <div><i class="fa fa-times-circle-o margin-right-5"></i><strong>{{ package.loadingStatus.message }}</strong></div>
+          <span style="word-break: break-all" ng-if="!!package.loadingStatus.error">{{ package.loadingStatus.error }}</span>
+        </div>
       </td>
     </tr>
     </tbody>

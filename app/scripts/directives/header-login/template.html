@@ -1,0 +1,11 @@
+<ul class="secondary-nav">
+  <li class="user dropdown" ng-init="dropdown.isVisible = false">
+    <a href="javascript:void(0)" ng-click="dropdown.isVisible = !dropdown.isVisible">{{ userProfile.name }}</a>
+    <ul class="user-menu" ng-class="{'show-menu': dropdown.isVisible}"
+      ng-style="{backgroundImage: 'url(' + userProfile.avatar + ')'}">
+      <li class="name">{{ userProfile.username }}</li>
+      <li ng-if="metrics.total > 0" class="packages"><span>{{ metrics.total }}</span> packages on OpenSpending</li>
+      <li class="logout"><a href="javascript:void(0)" ng-click="userProfile.logout()">Logout</a></li>
+    </ul>
+  </li>
+</ul>

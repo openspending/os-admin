@@ -15,6 +15,7 @@ var resolve = require('resolve');
 var stringify = require('stringify');
 
 var frontSrcDir = path.join(__dirname, '/app');
+var frontAssetsDir = path.join(frontSrcDir, '/assets');
 var frontScriptsDir = path.join(frontSrcDir, '/scripts');
 var frontStylesDir = path.join(frontSrcDir, '/styles');
 
@@ -73,6 +74,7 @@ gulp.task('assets', [
 
 gulp.task('assets.images', function() {
   return gulp.src([
+    path.join(frontAssetsDir, '/**/*'),
     path.join(nodeModulesDir, '/os-mockups/assets/os-assets/**/*'),
     path.join(nodeModulesDir, '/os-mockups/assets/img/**/*')
   ])

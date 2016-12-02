@@ -4,19 +4,17 @@ var angular = require('angular');
 var template = require('./template.html');
 
 angular.module('Application')
-  .directive('sidebar', [
+  .directive('headerLogin', [
     function() {
       return {
         template: template,
-        replace: false,
+        replace: true,
         restrict: 'E',
         scope: {
-          selected: '='
+          userProfile: '=',
+          metrics: '=?'
         },
         link: function($scope) {
-          $scope.selectItem = function(item) {
-            $scope.selected = item;
-          };
         }
       };
     }

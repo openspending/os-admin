@@ -9,7 +9,7 @@ var application = angular.module('Application');
 application.controller('MainController', [
   '$scope', '$location', 'LoginService',
   function($scope, $location, LoginService) {
-    $scope.state = {
+    var state = $scope.state = {
       showProfile: false,
       dataPackageFilter: 'all' // 'published' / 'hidden'
     };
@@ -17,6 +17,10 @@ application.controller('MainController', [
     $scope.highlightPackage = $location.search().hl;
     $scope.$on('$locationChangeSuccess', function() {
       $scope.highlightPackage = $location.search().hl;
+    });
+
+    $scope.$on('profile.edit', function() {
+      state.showProfile = true;
     });
 
     function getMetrics(packages) {
@@ -50,18 +54,18 @@ application.controller('MainController', [
       return items;
     }
 
-    $scope.metrics = getMetrics([]);
+    state.metrics = getMetrics([]);
     $scope.$on('packages.changed', function() {
-      $scope.state.dataPackages = filterDataPackages(
-        $scope.dataPackages, $scope.state.dataPackageFilter
+      state.dataPackages = filterDataPackages(
+        $scope.dataPackages, state.dataPackageFilter
       );
-      $scope.metrics = getMetrics($scope.dataPackages);
+      state.metrics = getMetrics($scope.dataPackages);
     });
 
     $scope.$watch('state.dataPackageFilter', function(newValue, oldValue) {
       if (newValue !== oldValue) {
-        $scope.state.dataPackages = filterDataPackages(
-          $scope.dataPackages, $scope.state.dataPackageFilter
+        state.dataPackages = filterDataPackages(
+          $scope.dataPackages, state.dataPackageFilter
         );
       }
     });
@@ -90,10 +94,10 @@ application.controller('MainController', [
       .then(function(dataPackages) {
         $scope.isLoaded.packages = true;
         $scope.dataPackages = dataPackages;
-        $scope.state.dataPackages = filterDataPackages(
-          $scope.dataPackages, $scope.state.dataPackageFilter
+        state.dataPackages = filterDataPackages(
+          $scope.dataPackages, state.dataPackageFilter
         );
-        $scope.metrics = getMetrics($scope.state.dataPackages);
+        state.metrics = getMetrics(state.dataPackages);
       })
       .catch(function() {
         LoginService.login();

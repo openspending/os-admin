@@ -1,0 +1,36 @@
+<aside>
+  <div class="user">
+    <span class="avatar" ng-style="{backgroundImage: 'url(' + userProfile.avatar + ')'}"></span>
+    <h4 class="name">{{ userProfile.name }}</h4>
+  </div>
+
+  <ul class="accordion">
+    <li class="filter" ng-class="{'is-expanded': accordion.isSidebarExpanded}" ng-init="accordion.isSidebarExpanded = true">
+      <a href="javascript:void(0)" class="js-accordion-trigger"
+        ng-click="accordion.isSidebarExpanded = !accordion.isSidebarExpanded">My Datasets</a>
+      <ul class="submenu slide-animation" ng-if="accordion.isSidebarExpanded">
+        <li>
+          <a href="javascript:void(0)"
+            ng-class="{active: datapackageFilter == 'all'}"
+            ng-click="changeDataPackageFilter('all')">All datasets <span class="label">{{ metrics.total }}</span></a>
+        </li>
+        <li>
+          <a href="javascript:void(0)"
+            ng-class="{active: datapackageFilter == 'published'}"
+            ng-click="changeDataPackageFilter('published')">Published only <span class="label">{{ metrics.published }}</span></a>
+        </li>
+        <li>
+          <a href="javascript:void(0)"
+            ng-class="{active: datapackageFilter == 'hidden'}"
+            ng-click="changeDataPackageFilter('hidden')">Private only <span class="label">{{ metrics.hidden }}</span></a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <footer>
+    <a class="edit" href="javascript:void(0)" ng-click="editProfile()">
+      <svg><use xlink:href="#icon-cog" /></svg> <span>Edit profile</span>
+    </a>
+  </footer>
+</aside>
