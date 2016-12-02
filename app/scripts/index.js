@@ -28,4 +28,4 @@ var _ = require('lodash');
     require('./application');
     angular.bootstrap(globals.document, ['Application']);
   });
-})(window || this);
+})(window);

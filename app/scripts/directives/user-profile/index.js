@@ -1,14 +1,13 @@
 'use strict';
 
-var angular = require('angular');
 var template = require('./template.html');
 
 var $q = require('../../services/ng-utils').$q;
 var osAdminService = require('../../services/os-admin');
 
-var application = angular.module('Application');
+var ngModule = require('../../module');
 
-application.directive('userProfile', [
+ngModule.directive('userProfile', [
   'Configuration', 'LoginService',
   function(Configuration, LoginService) {
     return {

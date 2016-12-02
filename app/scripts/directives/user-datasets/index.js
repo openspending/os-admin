@@ -1,14 +1,13 @@
 'use strict';
 
-var angular = require('angular');
 var template = require('./template.html');
 
 var $q = require('../../services/ng-utils').$q;
 var osAdminService = require('../../services/os-admin');
 
-var application = angular.module('Application');
+var ngModule = require('../../module');
 
-application.directive('userDatasets', [
+ngModule.directive('userDatasets', [
   '$rootScope', 'LoginService',
   function($rootScope, LoginService) {
     return {
@@ -50,13 +49,12 @@ application.directive('userDatasets', [
           if (dataPackage) {
             dataPackage.isRunningWebhooks = true;
             var token = LoginService.permissionToken;
-            $q(osAdminService.runWebHooks(token,dataPackage))
+            $q(osAdminService.runWebHooks(token, dataPackage))
               .finally(function() {
                 dataPackage.isRunningWebhooks = false;
               });
           }
         };
-
       }
     };
   }

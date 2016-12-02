@@ -10,7 +10,7 @@ module.exports = {
     if (bypassCache || !cache[url]) {
       var requestPromise = fetch(url, options).then(function(response) {
         if (response.status != 200) {
-          throw 'Failed loading data from ' + response.url;
+          throw new Error('Failed loading data from ' + response.url);
         }
         return response.text();
       });

@@ -1,9 +1,8 @@
 'use strict';
 
-var angular = require('angular');
-var application = angular.module('Application');
+var ngModule = require('../../module');
 
-application.directive('bootstrapTooltip', [
+ngModule.directive('bootstrapTooltip', [
   function() {
     return {
       restrict: 'A',

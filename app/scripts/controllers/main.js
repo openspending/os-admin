@@ -1,12 +1,11 @@
 'use strict';
 
-var angular = require('angular');
 var osAdminService = require('../services/os-admin');
 var $q = require('../services/ng-utils').$q;
 
-var application = angular.module('Application');
+var ngModule = require('../module');
 
-application.controller('MainController', [
+ngModule.controller('MainController', [
   '$scope', '$location', 'LoginService',
   function($scope, $location, LoginService) {
     var state = $scope.state = {
