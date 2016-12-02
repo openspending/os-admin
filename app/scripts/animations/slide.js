@@ -1,11 +1,9 @@
 'use strict';
 
-var angular = require('angular');
 var $ = require('jquery');
+var ngModule = require('../module');
 
-var application = angular.module('Application');
-
-module.exports = application.animation('.slide-animation', [
+module.exports = ngModule.animation('.slide-animation', [
   function() {
     return {
       enter: function(element, doneFn) {

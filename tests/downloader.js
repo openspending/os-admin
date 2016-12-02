@@ -12,7 +12,6 @@ var
   ];
 
 describe('Downloader', function() {
-
   var page1Body = null;
   var page2Body = null;
 
@@ -85,5 +84,4 @@ describe('Downloader', function() {
         done();
       });
   });
-
 });

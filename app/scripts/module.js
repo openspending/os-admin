@@ -1,28 +1,24 @@
 'use strict';
 
 var angular = require('angular');
+require('angular-marked');
+require('angular-animate');
 
-var application = angular.module('Application');
-
-var config = {
-  events: {
-    profile: {
-      usernameModalAccept: 'profile.usernameModalAccept'
-    }
-  }
-};
-
-application.constant('Configuration', config);
-
-require('../services/login');
-
-application
+var ngModule = angular.module('Application', [
+  'ngAnimate',
+  'hc.marked',
+  'authClient.services'
+])
+  .constant('Configuration', {})
   .config([
     '$httpProvider', '$compileProvider', '$logProvider', 'markedProvider',
-    function($httpProvider, $compileProvider, $logProvider, markedProvider) {
+    '$locationProvider',
+    function($httpProvider, $compileProvider, $logProvider, markedProvider,
+      $locationProvider) {
       $compileProvider.aHrefSanitizationWhitelist(
         /^\s*(https?|ftp|mailto|file|javascript):/);
       $logProvider.debugEnabled(true);
+      $locationProvider.html5Mode(true);
       markedProvider.setOptions({gfm: true});
     }
   ])
@@ -33,3 +29,5 @@ application
       $rootScope.login = LoginService;
     }
   ]);
+
+module.exports = ngModule;

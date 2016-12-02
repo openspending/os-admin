@@ -58,7 +58,6 @@ function updateUserProfile(authToken, profileData) {
 }
 
 function getDataPackageMetadata(dataPackage) {
-  // jscs:disable
   var originUrl = dataPackage.origin_url ? dataPackage.origin_url :
     [
       'http://datastore.openspending.org',
@@ -66,7 +65,6 @@ function getDataPackageMetadata(dataPackage) {
       dataPackage.package.name,
       'datapackage.json'
     ].join('/');
-  // jscs:enable
 
   return {
     id: dataPackage.id,
@@ -82,10 +80,8 @@ function getDataPackageMetadata(dataPackage) {
       var isLoaded = _.isUndefined(dataPackage.loaded) ? true :
         !!dataPackage.loaded;
 
-      // jscs:disable
       var loadingStatus = isLoaded ? 'done' :
         (dataPackage.loaging_status || 'queued');
-      // jscs:enable
 
       var isFailed = loadingStatus == 'fail';
 
@@ -95,9 +91,7 @@ function getDataPackageMetadata(dataPackage) {
         status: loadingStatus,
         message: RemoteProcessingStatus[loadingStatus] ||
           RemoteProcessingStatus.queued,
-        // jscs:disable
         error: isFailed ? dataPackage.loading_error : null
-        // jscs:enable
       };
 
       // Show UI message for failed and in-progress packages
@@ -107,17 +101,13 @@ function getDataPackageMetadata(dataPackage) {
       result.countOfRecords = 0;
       result.processedRecords = 0;
       _.each(dataPackage.package.resources, function(resource) {
-        // jscs:disable
         var count = parseInt(resource.count_of_rows, 10) || 0;
-        // jscs:enable
         if (count > 0) {
           result.countOfRecords += count;
         }
       });
       if (result.countOfRecords == 0) {
-        // jscs:disable
         var count = parseInt(dataPackage.package.count_of_rows, 10) || 0;
-        // jscs:enable
         if (count > 0) {
           result.countOfRecords = count;
         }

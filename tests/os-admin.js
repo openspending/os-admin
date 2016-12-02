@@ -9,7 +9,6 @@ var osAdmin = require('../app/scripts/services/os-admin');
 var data = require('./data');
 
 describe('OS-Admin', function() {
-
   var authToken = '1234';
 
   before(function(done) {
@@ -108,5 +107,4 @@ describe('OS-Admin', function() {
         done();
       });
   });
-
 });

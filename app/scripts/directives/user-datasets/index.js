@@ -1,73 +1,30 @@
 'use strict';
 
-var angular = require('angular');
 var template = require('./template.html');
 
 var $q = require('../../services/ng-utils').$q;
 var osAdminService = require('../../services/os-admin');
 
-require('./package-resources');
+var ngModule = require('../../module');
 
-var application = angular.module('Application');
-
-application.directive('userDatasets', [
-  'LoginService',
-  function(LoginService) {
+ngModule.directive('userDatasets', [
+  '$rootScope', 'LoginService',
+  function($rootScope, LoginService) {
     return {
       restrict: 'E',
       replace: false,
       template: template,
       scope: {
         packages: '=',
-        loaded: '@',
+        loaded: '=',
         viewerUrl: '@',
         packagerUrl: '@',
         highlightPackage: '@?'
       },
       link: function($scope) {
-        function getMetrics(packages) {
-          var result = {
-            total: 0,
-            published: 0,
-            hidden: 0
-          };
-          _.each(packages, function(item) {
-            result.total += 1;
-            if (item.isPublished) {
-              result.published += 1;
-            } else {
-              result.hidden += 1;
-            }
-          });
-          return result;
-        }
-
-        $scope.metrics = getMetrics($scope.packages);
-        $scope.$watchCollection('packages', function() {
-          $scope.metrics = getMetrics($scope.packages);
-        });
-
-        function getFilters(filters) {
-          var result = {};
-          if (filters.title) {
-            result.title = filters.title;
-          }
-          if (filters.isPublished !== null) {
-            result.isPublished = filters.isPublished;
-          }
-          return result;
-        }
-
-        $scope.filters = {
-          title: '',
-          isPublished: null
+        $scope.filter = {
+          title: ''
         };
-        $scope.actualFilters = getFilters($scope.filters);
-        $scope.$watch('filters', function(newValue, oldValue) {
-          if (newValue !== oldValue) {
-            $scope.actualFilters = getFilters($scope.filters);
-          }
-        }, true);
 
         $scope.togglePublicationStatus = function(packageId) {
           var dataPackage = _.find($scope.packages, {
@@ -80,7 +37,7 @@ application.directive('userDatasets', [
               dataPackage))
               .finally(function() {
                 dataPackage.isUpdating = false;
-                $scope.metrics = getMetrics($scope.packages);
+                $rootScope.$broadcast('packages.changed');
               });
           }
         };
@@ -92,13 +49,12 @@ application.directive('userDatasets', [
           if (dataPackage) {
             dataPackage.isRunningWebhooks = true;
             var token = LoginService.permissionToken;
-            $q(osAdminService.runWebHooks(token,dataPackage))
+            $q(osAdminService.runWebHooks(token, dataPackage))
               .finally(function() {
                 dataPackage.isRunningWebhooks = false;
               });
           }
         };
-
       }
     };
   }

@@ -1,0 +1,24 @@
+aside .accordion li.filter .submenu a.active:after {
+  content: none;
+}
+
+.package-loading-status {
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.package-loading-status .progress {
+  margin: 5px 0;
+}
+
+.margin-right-5 {
+  margin-right: 5px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.admin .app-container .dataset-list > table tbody tr.highlighted {
+  background-color: #fcf8e3;
+}
