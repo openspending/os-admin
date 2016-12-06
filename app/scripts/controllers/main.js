@@ -1,6 +1,7 @@
 'use strict';
 
 var osAdminService = require('../services/os-admin');
+var filteringService = require('../services/filtering');
 var $q = require('../services/ng-utils').$q;
 
 var ngModule = require('../module');
@@ -10,7 +11,10 @@ ngModule.controller('MainController', [
   function($scope, $location, LoginService) {
     var state = $scope.state = {
       showProfile: false,
-      dataPackageFilter: 'all' // 'published' / 'hidden'
+      dataPackageFilter: {
+        publishingStatus: 'all', // 'published' / 'hidden'
+        loadingStatus: 'all' // 'loaded' / 'loading' / 'failed'
+      }
     };
 
     $scope.highlightPackage = $location.search().hl;
@@ -22,52 +26,30 @@ ngModule.controller('MainController', [
       state.showProfile = true;
     });
 
-    function getMetrics(packages) {
-      var result = {
-        total: 0,
-        published: 0,
-        hidden: 0
-      };
-      _.each(packages, function(item) {
-        result.total += 1;
-        if (item.isPublished) {
-          result.published += 1;
-        } else {
-          result.hidden += 1;
-        }
-      });
-      return result;
+    function updatePackagesAndMetrics() {
+      var dataPackages = _.isArray($scope.dataPackages) ?
+        $scope.dataPackages: [];
+      var filterValues = _.extend({}, state.dataPackageFilter);
+
+      var filter = filteringService(dataPackages, filterValues);
+      state.dataPackages = filter.getItems();
+      state.metrics = filter.getMetrics();
+
+      filter = filteringService(dataPackages, {});
+      state.globalMetrics = filter.getMetrics();
     }
 
-    function filterDataPackages(items, filter) {
-      if (filter == 'published') {
-        return _.filter(items, function(item) {
-          return item.isPublished;
-        });
-      }
-      if (filter == 'hidden') {
-        return _.filter(items, function(item) {
-          return !item.isPublished;
-        });
-      }
-      return items;
-    }
+    updatePackagesAndMetrics();
 
-    state.metrics = getMetrics([]);
     $scope.$on('packages.changed', function() {
-      state.dataPackages = filterDataPackages(
-        $scope.dataPackages, state.dataPackageFilter
-      );
-      state.metrics = getMetrics($scope.dataPackages);
+      updatePackagesAndMetrics();
     });
 
     $scope.$watch('state.dataPackageFilter', function(newValue, oldValue) {
       if (newValue !== oldValue) {
-        state.dataPackages = filterDataPackages(
-          $scope.dataPackages, state.dataPackageFilter
-        );
+        updatePackagesAndMetrics();
       }
-    });
+    }, true);
 
     LoginService.tryGetToken()
       .then(function() {
@@ -93,10 +75,7 @@ ngModule.controller('MainController', [
       .then(function(dataPackages) {
         $scope.isLoaded.packages = true;
         $scope.dataPackages = dataPackages;
-        state.dataPackages = filterDataPackages(
-          $scope.dataPackages, state.dataPackageFilter
-        );
-        state.metrics = getMetrics(state.dataPackages);
+        updatePackagesAndMetrics();
       })
       .catch(function() {
         LoginService.login();

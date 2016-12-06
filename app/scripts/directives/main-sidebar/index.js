@@ -15,10 +15,6 @@ ngModule.directive('mainSidebar', [
         datapackageFilter: '=?'
       },
       link: function($scope) {
-        $scope.changeDataPackageFilter = function(value) {
-          $scope.datapackageFilter = value;
-        };
-
         $scope.editProfile = function() {
           $scope.$emit('profile.edit');
         };

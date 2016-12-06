@@ -11,18 +11,45 @@
       <ul class="submenu slide-animation" ng-if="accordion.isSidebarExpanded">
         <li>
           <a href="javascript:void(0)"
-            ng-class="{active: datapackageFilter == 'all'}"
-            ng-click="changeDataPackageFilter('all')">All datasets <span class="label">{{ metrics.total }}</span></a>
+            ng-class="{active: datapackageFilter.publishingStatus == 'all'}"
+            ng-click="datapackageFilter.publishingStatus = 'all'">All datasets <span class="label">{{ metrics.publishingStatus.total }}</span></a>
         </li>
         <li>
           <a href="javascript:void(0)"
-            ng-class="{active: datapackageFilter == 'published'}"
-            ng-click="changeDataPackageFilter('published')">Published only <span class="label">{{ metrics.published }}</span></a>
+            ng-class="{active: datapackageFilter.publishingStatus == 'published'}"
+            ng-click="datapackageFilter.publishingStatus = 'published'">Published only <span class="label">{{ metrics.publishingStatus.published }}</span></a>
         </li>
         <li>
           <a href="javascript:void(0)"
-            ng-class="{active: datapackageFilter == 'hidden'}"
-            ng-click="changeDataPackageFilter('hidden')">Private only <span class="label">{{ metrics.hidden }}</span></a>
+            ng-class="{active: datapackageFilter.publishingStatus == 'hidden'}"
+            ng-click="datapackageFilter.publishingStatus = 'hidden'">Private only <span class="label">{{ metrics.publishingStatus.hidden }}</span></a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="filter" ng-class="{'is-expanded': accordion.isLoadingStatusExpanded}" ng-init="accordion.isLoadingStatusExpanded = true">
+      <a href="javascript:void(0)" class="js-accordion-trigger"
+        ng-click="accordion.isLoadingStatusExpanded = !accordion.isLoadingStatusExpanded">Upload status</a>
+      <ul class="submenu slide-animation" ng-if="accordion.isLoadingStatusExpanded">
+        <li>
+          <a href="javascript:void(0)"
+            ng-class="{active: datapackageFilter.loadingStatus == 'all'}"
+            ng-click="datapackageFilter.loadingStatus = 'all'">All datasets <span class="label">{{ metrics.loadingStatus.total }}</span></a>
+        </li>
+        <li>
+          <a href="javascript:void(0)"
+            ng-class="{active: datapackageFilter.loadingStatus == 'loaded'}"
+            ng-click="datapackageFilter.loadingStatus = 'loaded'">Loaded <span class="label">{{ metrics.loadingStatus.loaded }}</span></a>
+        </li>
+        <li>
+          <a href="javascript:void(0)"
+            ng-class="{active: datapackageFilter.loadingStatus == 'loading'}"
+            ng-click="datapackageFilter.loadingStatus = 'loading'">In progress <span class="label">{{ metrics.loadingStatus.loading }}</span></a>
+        </li>
+        <li>
+          <a href="javascript:void(0)"
+            ng-class="{active: datapackageFilter.loadingStatus == 'failed'}"
+            ng-click="datapackageFilter.loadingStatus = 'failed'">Failed <span class="label">{{ metrics.loadingStatus.failed }}</span></a>
         </li>
       </ul>
     </li>
