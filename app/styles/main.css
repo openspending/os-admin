@@ -19,6 +19,31 @@ aside .accordion li.filter .submenu a.active:after {
   width: 100%;
 }
 
+.admin .app-container .dataset-list > table tbody tr:nth-child(odd) td > ul:before {
+  content: none;
+}
+
+.admin .app-container .dataset-list > table tbody tr td {
+  vertical-align: top;
+}
+
+.admin .app-container .dataset-list > table tbody tr td.actions {
+  padding-bottom: 0;
+}
+
+.admin .app-container .dataset-list > table tbody tr td.actions > ul > li > a.info-text,
+.admin .app-container .dataset-list > table tbody tr td.actions > ul > li > a.info-text:hover,
+.admin .app-container .dataset-list > table tbody tr td.actions > ul > li > a.info-text:focus,
+.admin .app-container .dataset-list > table tbody tr td.actions > ul > li > a.info-text:active {
+  color: inherit;
+  text-decoration: none;
+  cursor: text;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
 .admin .app-container .dataset-list > table tbody tr.highlighted {
   background-color: #fcf8e3;
 }

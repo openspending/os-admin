@@ -30,16 +30,28 @@
       <td colspan="3"><strong>No items.</strong></td>
     </tr>
     <tr ng-repeat="package in (packages | filter:filter) track by package.id"
-      ng-class="{highlighted: package.id == highlightPackage}">
+      ng-class="{highlighted: package.id == highlightPackage}" class="clearfix">
       <td><span>{{ package.title }}</span></td>
       <td class="status" ng-if="package.isPublished"><span class="label label-primary">Published</span></td>
       <td class="status" ng-if="!package.isPublished"><span class="label label-warning">Private</span></td>
       <td class="status" ng-if="package.id == highlightPackage"><span class="label label-success">New</span></td>
       <td class="status" ng-if="package.isRunningWebhooks"><span class="label label-primary">
-        <i class="fa fa-spinner fa-pulse margin-right-4"></i> Running webhooks...
-      </span></td>
+
       <td class="actions">
         <ul>
+          <li ng-if="(package.totalCountOfResources > 0) && (package.totalCountOfRecords > 1) && (package.totalSizeOfResources > 0)">
+            <a class="info-text"><span ng-pluralize
+              count="package.totalCountOfResources"
+              when="{1: 'One resource', 'other': '{} resources'}"
+            ></span> / ~{{ package.totalCountOfRecords }} records / {{ package.totalSizeOfResources | bytes:true }}</a>
+          </li>
+          <li ng-if="(package.totalCountOfResources > 0) && package.totalCountOfRecords <= 1">
+            <a class="info-text"><span ng-pluralize
+              count="package.totalCountOfResources"
+              when="{1: 'One resource', 'other': '{} resources'}"
+            ></span> / {{ package.totalSizeOfResources | bytes:true }}</a>
+          </li>
+
           <li ng-if="package.isPublished && package.loadingStatus.loaded" class="make-private">
             <a href="javascript:void(0)" ng-click="togglePublicationStatus(package.id)">Make private</a>
           </li>
