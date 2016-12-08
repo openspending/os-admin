@@ -11,6 +11,9 @@ module.exports = [
     author: 'Levko Kravets',
     url: 'http://s3.amazonaws.com/datastore.openspending.org/' +
       '583b10ad15f2e7f078afd3431c2c09ea/test/datapackage.json',
+    totalCountOfResources: 1,
+    totalCountOfRecords: 0,
+    totalSizeOfResources: 626744786,
     loadingStatus: {
       loaded: true,
       failed: false,
@@ -39,6 +42,9 @@ module.exports = [
     author: 'Levko Kravets',
     url: 'http://s3.amazonaws.com/datastore.openspending.org/' +
       '583b10ad15f2e7f078afd3431c2c09ea/test2/datapackage.json',
+    totalCountOfResources: 1,
+    totalCountOfRecords: 0,
+    totalSizeOfResources: 75202,
     loadingStatus: {
       loaded: true,
       failed: false,

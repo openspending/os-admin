@@ -54,18 +54,22 @@ describe('OS-Admin', function() {
   });
 
   it('Should load settings', function(done) {
-    osAdmin.getSettings().then(function(result) {
-      assert.equal(result.conductorUrl, osAdmin.conductorUrl);
-      assert.equal(result.searchUrl, osAdmin.searchUrl);
-      done();
-    });
+    osAdmin.getSettings()
+      .then(function(result) {
+        assert.equal(result.conductorUrl, osAdmin.conductorUrl);
+        assert.equal(result.searchUrl, osAdmin.searchUrl);
+        done();
+      })
+      .catch(done);
   });
 
   it('Should load datapackages', function(done) {
-    osAdmin.getDataPackages().then(function(results) {
-      assert.deepEqual(results, data.loadedPackages);
-      done();
-    });
+    osAdmin.getDataPackages()
+      .then(function(results) {
+        assert.deepEqual(results, data.loadedPackages);
+        done();
+      })
+      .catch(done);
   });
 
   it('Should update username', function(done) {
@@ -80,7 +84,8 @@ describe('OS-Admin', function() {
       .then(function(results) {
         assert.deepEqual(results, responseToCheck);
         done();
-      });
+      })
+      .catch(done);
   });
 
   it('Should toggle publication status', function(done) {
@@ -105,6 +110,7 @@ describe('OS-Admin', function() {
         });
         assert.equal(wasPublished, !neededPackage.isPublished);
         done();
-      });
+      })
+      .catch(done);
   });
 });

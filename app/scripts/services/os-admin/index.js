@@ -65,6 +65,33 @@ function getDataPackageMetadata(dataPackage) {
     'datapackage.json'
   ].join('/');
 
+  var totalCountOfRecords = (function(dataPackage) {
+    var result = 0;
+
+    _.each(dataPackage.resources, function(resource) {
+      var count = parseInt(resource.count_of_rows, 10) || 0;
+      if (count > 0) {
+        result += count;
+      }
+    });
+    if (result == 0) {
+      var count = parseInt(dataPackage.count_of_rows, 10) || 0;
+      if (count > 0) {
+        result = count;
+      }
+    }
+
+    return result;
+  })(dataPackage.package);
+
+  var totalSizeOfResources = _.chain(dataPackage.package.resources)
+    .map(function(resource) {
+      var result = parseInt(resource.bytes, 10) || 0;
+      return result > 0 ? result : 0;
+    })
+    .sum()
+    .value();
+
   return {
     id: dataPackage.id,
     name: dataPackage.package.name,
@@ -72,6 +99,9 @@ function getDataPackageMetadata(dataPackage) {
     description: dataPackage.package.description,
     owner: dataPackage.package.owner,
     isPublished: !dataPackage.package.private,
+    totalCountOfResources: _.get(dataPackage, 'package.resources.length', 0),
+    totalCountOfRecords: totalCountOfRecords,
+    totalSizeOfResources: totalSizeOfResources,
     loadingStatus: (function() {
       // Old packages will have no `loaded`/`loading_*` properties;
       // treat them as successfully loaded.
@@ -97,20 +127,8 @@ function getDataPackageMetadata(dataPackage) {
       result.showMessage = !result.loaded;
 
       // Calculate count of rows (if available)
-      result.countOfRecords = 0;
+      result.countOfRecords = totalCountOfRecords;
       result.processedRecords = 0;
-      _.each(dataPackage.package.resources, function(resource) {
-        var count = parseInt(resource.count_of_rows, 10) || 0;
-        if (count > 0) {
-          result.countOfRecords += count;
-        }
-      });
-      if (result.countOfRecords == 0) {
-        var count = parseInt(dataPackage.package.count_of_rows, 10) || 0;
-        if (count > 0) {
-          result.countOfRecords = count;
-        }
-      }
 
       return result;
     })(),
