@@ -40,4 +40,4 @@ jspm_packages
 .idea
 
 # Some project-specific files
-config.json
+config.js

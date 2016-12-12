@@ -1,8 +1,11 @@
 'use strict';
 
+/* global window */
+
 var _ = require('lodash');
 var url = require('url');
 var downloader = require('../downloader');
+var Promise = require('bluebird');
 
 module.exports.defaultSettingsUrl = 'config.json';
 module.exports.conductorUrl = null;
@@ -26,8 +29,7 @@ var RemoteProcessingStatus = {
 };
 
 function getSettings(settingsUrl) {
-  var url = settingsUrl || module.exports.defaultSettingsUrl;
-  return downloader.getJson(url);
+  return Promise.resolve(window.globalConfig || {});
 }
 
 function updateUserProfile(authToken, profileData) {
