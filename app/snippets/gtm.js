@@ -1,6 +1,5 @@
 // Google Tag Manager
 var globalConfig = window.globalConfig || {};
-console.log(2, globalConfig.snippets);
 if (globalConfig.snippets.gtm) {
 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
