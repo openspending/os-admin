@@ -4,6 +4,6 @@ window.globalConfig = {
   viewerUrl: "http://next.openspending.org/viewer",
   packagerUrl: "http://next.openspending.org/packager",
   snippets: {
-    ga: 'UA-33874954-42'
+    ga: null
   }
 };
