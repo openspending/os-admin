@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('lodash');
+var fs = require('fs');
 var webpack = require('webpack');
 
 var plugins = [
@@ -21,12 +23,16 @@ if (process.env.NODE_ENV == 'production') {
 }
 
 module.exports = {
-  entry: './app/scripts/index.js',
+  entry: {
+    'os-admin': './app/scripts/index.js',
+    'snippets': _.map(fs.readdirSync('./app/snippets/'), function(filename) {
+      return './app/snippets/' + filename;
+    })
+  },
   devtool: 'source-map',
   output: {
-    filename: 'os-admin.js',
+    filename: '[name].js',
     path: './public/scripts',
-    library: 'osAdmin',
     libraryTarget: 'umd'
   },
   externals: {

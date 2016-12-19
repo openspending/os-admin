@@ -19,12 +19,13 @@ describe('OS-Admin', function() {
     var scope = nock('http://example.com/')
       .persist();
 
-    scope
-      .get('/config.json')
-      .reply(200, {
+    // Fake window with settings
+    global.window = {
+      globalConfig: {
         conductorUrl: osAdmin.conductorUrl,
         searchUrl: osAdmin.searchUrl
-      }, {'access-control-allow-origin': '*'});
+      }
+    };
 
     scope
       .get('/search/package?size=10000')
