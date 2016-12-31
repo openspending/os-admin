@@ -38,6 +38,3 @@ jspm_packages
 
 # Editor files
 .idea
-
-# Some project-specific files
-config.js
