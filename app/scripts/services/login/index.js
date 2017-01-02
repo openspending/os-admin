@@ -1,11 +1,14 @@
 'use strict';
 
+var _ = require('lodash');
 var ngModule = require('../../module');
 
 ngModule.factory('LoginService', [
   '$q', 'authenticate', 'authorize', '$window',
   function($q, authenticate, authorize, $window) {
     var result = {};
+
+    result.onLogout = null;
 
     result.reset = function() {
       result.isLoggedIn = false;
@@ -82,6 +85,10 @@ ngModule.factory('LoginService', [
       if (result.isLoggedIn) {
         result.reset();
         authenticate.logout();
+
+        if (_.isFunction(result.onLogout)) {
+          result.onLogout();
+        }
       }
     };
 

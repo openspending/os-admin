@@ -7,8 +7,8 @@ var $q = require('../services/ng-utils').$q;
 var ngModule = require('../module');
 
 ngModule.controller('MainController', [
-  '$scope', '$location', 'LoginService',
-  function($scope, $location, LoginService) {
+  '$scope', '$window', '$location', 'LoginService',
+  function($scope, $window, $location, LoginService) {
     var state = $scope.state = {
       showProfile: false,
       dataPackageFilter: {
@@ -62,6 +62,14 @@ ngModule.controller('MainController', [
         $scope.packagerUrl = settings.packagerUrl;
         osAdminService.conductorUrl = settings.conductorUrl;
         osAdminService.searchUrl = settings.searchUrl;
+
+        LoginService.onLogout = function() {
+          if (settings.explorerUrl) {
+            $window.location.href = settings.explorerUrl;
+          } else {
+            LoginService.login();
+          }
+        };
 
         return $q(osAdminService.getDataPackages(
           LoginService.getToken(),
