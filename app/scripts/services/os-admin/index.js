@@ -296,6 +296,32 @@ function togglePackagePublicationStatus(permissionToken, dataPackage) {
     });
 }
 
+function deletePackage(permissionToken, dataPackage) {
+  var url = module.exports.conductorUrl + '/package/delete';
+
+  var data = _.chain({
+    jwt: permissionToken,
+    id: dataPackage.id,
+  })
+    .map(function(value, key) {
+      return encodeURIComponent(key) + '=' + encodeURIComponent(value);
+    })
+    .join('&')
+    .value();
+
+  var options = {
+    method: 'POST'
+  };
+  return downloader.getJson(url + '?' + data, options, true)
+    .then(function(result) {
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+      return dataPackage;
+    });
+}
+
+
 function runWebHooks(permissionToken, dataPackage) {
   var url = module.exports.conductorUrl + '/package/run-hooks';
 
@@ -325,4 +351,5 @@ module.exports.getSettings = getSettings;
 module.exports.updateUserProfile = updateUserProfile;
 module.exports.getDataPackages = getDataPackages;
 module.exports.togglePackagePublicationStatus = togglePackagePublicationStatus;
+module.exports.deletePackage = deletePackage;
 module.exports.runWebHooks = runWebHooks;

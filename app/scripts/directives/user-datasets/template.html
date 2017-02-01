@@ -60,7 +60,11 @@
           </li>
           <li class="edit" ng-if="!!packagerUrl">
             <a data-toggle="tooltip" bootstrap-tooltip data-placement="top" title="Edit"
-              ng-href="{{ packagerUrl + '/provide-data/?package=' + package.url }}" target="_blank"><svg><use xlink:href="#icon-edit" /></svg><span>Edit</span></a>
+               ng-href="{{ packagerUrl + '/provide-data/?package=' + package.url }}" target="_blank"><svg><use xlink:href="#icon-edit" /></svg><span>Edit</span></a>
+          </li>
+          <li class="delete" ng-if="!!packagerUrl">
+            <a data-toggle="popover" confirmation-popover data-on-click="deletePackage(package.id)"
+               ><svg><use xlink:href="#icon-trashcan" /></svg><span>Delete</span></a>
           </li>
           <li class="view" ng-if="!!viewerUrl && package.loadingStatus.loaded">
             <a data-toggle="tooltip" bootstrap-tooltip data-placement="top" title="View"
@@ -128,6 +132,7 @@
     </tr>
     </tbody>
   </table>
+  <div class="delete-confirmation"></div>
 </div>
 
 </div>

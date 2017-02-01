@@ -42,6 +42,25 @@ ngModule.directive('userDatasets', [
           }
         };
 
+        $scope.deletePackage = function(packageId) {
+          var dataPackage = _.find($scope.packages, {
+            id: packageId
+          });
+          if (dataPackage) {
+            dataPackage.isUpdating = true;
+            var token = LoginService.permissionToken;
+            $q(osAdminService.deletePackage(token,
+              dataPackage))
+              .finally(function() {
+                dataPackage.isUpdating = false;
+                $scope.packages = _.filter($scope.packages, function(p) {
+                  return p != dataPackage;
+                });
+                $rootScope.$broadcast('packages.changed');
+              });
+          }
+        };
+
         $scope.runWebHooks = function(packageId) {
           var dataPackage = _.find($scope.packages, {
             id: packageId
