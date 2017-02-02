@@ -51,6 +51,9 @@
               when="{1: 'One resource', 'other': '{} resources'}"
             ></span> / {{ package.totalSizeOfResources | bytes:true }}</a>
           </li>
+          <li ng-if="package.last_update > 0">
+            <a class="info-text">Updated at {{ package.last_update | date:'yyyy/MM/dd HH:mm' }}</a>
+          </li>
 
           <li ng-if="package.isPublished && package.loadingStatus.loaded" class="make-private">
             <a href="javascript:void(0)" ng-click="togglePublicationStatus(package.id)">Make private</a>

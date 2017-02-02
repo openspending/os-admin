@@ -101,6 +101,7 @@ function getDataPackageMetadata(dataPackage) {
     description: dataPackage.package.description,
     owner: dataPackage.package.owner,
     isPublished: !dataPackage.package.private,
+    last_update: dataPackage.last_update ? dataPackage.last_update * 1000 : 0,
     totalCountOfResources: _.get(dataPackage, 'package.resources.length', 0),
     totalCountOfRecords: totalCountOfRecords,
     totalSizeOfResources: totalSizeOfResources,
