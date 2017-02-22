@@ -53,10 +53,7 @@ ngModule.directive('userDatasets', [
               dataPackage))
               .finally(function() {
                 dataPackage.isUpdating = false;
-                $scope.packages = _.filter($scope.packages, function(p) {
-                  return p != dataPackage;
-                });
-                $rootScope.$broadcast('packages.changed');
+                $rootScope.$broadcast('package.deleted', dataPackage);
               });
           }
         };

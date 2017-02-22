@@ -41,6 +41,13 @@ ngModule.controller('MainController', [
 
     updatePackagesAndMetrics();
 
+    $scope.$on('package.deleted', function(ev, dataPackage) {
+      $scope.dataPackages = _.filter($scope.dataPackages, function(p) {
+        return p != dataPackage;
+      });
+      updatePackagesAndMetrics();
+    });
+
     $scope.$on('packages.changed', function() {
       updatePackagesAndMetrics();
     });
