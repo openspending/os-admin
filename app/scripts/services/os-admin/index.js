@@ -61,7 +61,7 @@ function updateUserProfile(authToken, profileData) {
 
 function getDataPackageMetadata(dataPackage) {
   var originUrl = dataPackage.origin_url || dataPackage.__origin_url || [
-    'http://datastore.openspending.org',
+    '//datastore.openspending.org',
     dataPackage.package.owner,
     dataPackage.package.name,
     'datapackage.json'
