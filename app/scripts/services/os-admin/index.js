@@ -66,6 +66,7 @@ function getDataPackageMetadata(dataPackage) {
     dataPackage.package.name,
     'datapackage.json'
   ].join('/');
+  originUrl = originUrl.replace(/^http:/, 'https:');
 
   var totalCountOfRecords = (function(dataPackage) {
     var result = 0;
