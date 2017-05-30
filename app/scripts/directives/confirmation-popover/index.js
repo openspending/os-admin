@@ -12,9 +12,10 @@ ngModule.directive('confirmationPopover', [
         onClick: '&'
       },
       link: function($scope, element, attrs) {
-        var content = "This will DELETE this data-set - <br/>" +
-          "Are you sure?<br/>" +
-          "<button class='btn btn-danger btn-sm btn-block'>Yes, Delete</button>";
+        var content = 'This will DELETE this data-set - <br/>' +
+          'Are you sure?<br/>' +
+          '<button class="btn btn-danger btn-sm btn-block">' +
+          'Yes, Delete</button>';
         var container = '.delete-confirmation';
         var deletePackage = $scope.onClick;
         element.popover({
@@ -24,12 +25,12 @@ ngModule.directive('confirmationPopover', [
           placement: 'bottom'
         });
         element.on('inserted.bs.popover', function(e) {
-          $(container+" button").on('click', function() {
+          $(container+' button').on('click', function() {
             console.log('Deleting '+deletePackage);
             deletePackage();
             element.popover('hide');
             $scope.$applyAsync();
-          })
+          });
         });
       }
     };
