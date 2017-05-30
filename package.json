@@ -48,6 +48,7 @@
   "scripts": {
     "start": "xdg-open index.html",
     "test": "mocha tests/*.js",
+    "posttest": "npm run review",
     "review": "eslint app/scripts tests gulpfile.js webpack.config.js",
     "build:assets": "gulp",
     "build:app": "webpack --hide-modules --config webpack.config.js",
