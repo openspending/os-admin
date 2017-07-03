@@ -1,3 +1,4 @@
+/* eslint-disable */
 // Google Analytics
 var globalConfig = window.globalConfig || {};
 if (globalConfig.snippets.ga) {

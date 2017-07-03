@@ -1,3 +1,4 @@
+/* eslint-disable */
 // Google Tag Manager
 var globalConfig = window.globalConfig || {};
 if (globalConfig.snippets.gtm) {

@@ -18,10 +18,10 @@
 <div class="site-header">
   <div class="wrapper">
     <a class="small adminbrand logo">
-      <ng-include src="'public/assets/OS.svg'">OS</ng-include>
+      <ng-include src="state.theme.header.logo.icon">OS</ng-include>
     </a>
 
-    <object class="logo type" type="image/svg+xml" data="public/assets/Admin.svg">Admin</object>
+    <object class="logo type" type="image/svg+xml" ng-attr-data="{{ state.theme.header.logo.image }}">Admin</object>
 
     <header-login ng-cloak ng-if="isLoaded.application"
       metrics="state.globalMetrics" user-profile="login"></header-login>
@@ -57,7 +57,9 @@
 <div class="site-footer">
   <div class="wrapper">
     <a class="footer-logo">
-      <object class="logo" type="image/svg+xml" data="public/assets/OpenSpending.svg">OpenSpending</object>
+      <object class="logo" type="image/svg+xml" ng-attr-data="{{ state.theme.footer.projectLogo.image }}">
+        {{ state.theme.footer.projectLogo.alt }}
+      </object>
     </a>
     <ul class="footer-primary-links">
       <li class="packager">
@@ -101,30 +103,21 @@
     </div>
 
     <hr>
-    <a class="ok footer-logo" href="https://okfn.org/">
-      <img src="https://branding.okfn.org/assets/landscape-white-rgb.svg" alt="Open Knowledge International" />
+    <a class="ok footer-logo" ng-href="{{ state.theme.footer.orgLogo.href }}">
+      <img ng-src="{{ state.theme.footer.orgLogo.image }}" alt="{{ state.theme.footer.orgLogo.alt }}" />
     </a>
 
     <div class="footer-secondary-links">
       <ul>
-        <li><a href="https://okfn.org/privacy-policy/">Privacy policy</a></li>
-        <li><a href="https://okfn.org/ip-policy/">IP policy</a></li>
-        <li><a href="https://okfn.org/cookie-policy/">Cookie policy</a></li>
-        <li><a href="https://okfn.org/terms-of-use/">Terms of use</a></li>
+        <li ng-repeat="link in state.theme.footer.links">
+          <a ng-href="{{ link.href }}">{{ link.title }}</a>
+        </li>
       </ul>
 
       <ul class="footer-social">
-        <li><a href="https://facebook.com/OKFNetwork">
-          <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/facebook-logo-circle.png" alt="Facebook">
-        </a></li>
-        <li>
-          <a href="https://twitter.com/okfn">
-            <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/twitter-logo-circle.png" alt="Twitter">
-          </a>
-        </li>
-        <li>
-          <a href="https://www.youtube.com/user/openknowledgefdn">
-            <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/youtube-logo-circle.png" alt="YouTube">
+        <li ng-repeat="link in state.theme.socialMedia">
+          <a ng-href="{{ link.href }}">
+            <img ng-src="{{ link.icon }}" alt="{{ link.alt }}" />
           </a>
         </li>
       </ul>
