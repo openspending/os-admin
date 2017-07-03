@@ -6,6 +6,8 @@ var $q = require('../services/ng-utils').$q;
 
 var ngModule = require('../module');
 
+var themes = require('../../config/themes');
+
 ngModule.controller('MainController', [
   '$scope', '$window', '$location', 'LoginService',
   function($scope, $window, $location, LoginService) {
@@ -14,7 +16,8 @@ ngModule.controller('MainController', [
       dataPackageFilter: {
         publishingStatus: 'all', // 'published' / 'hidden'
         loadingStatus: 'all' // 'loaded' / 'loading' / 'failed'
-      }
+      },
+      theme: themes.get($location.search().theme)
     };
 
     $scope.highlightPackage = $location.search().hl;
