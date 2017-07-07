@@ -17,7 +17,7 @@ ngModule.controller('MainController', [
         publishingStatus: 'all', // 'published' / 'hidden'
         loadingStatus: 'all' // 'loaded' / 'loading' / 'failed'
       },
-      theme: themes.get($location.search().theme)
+      theme: themes.getTheme($location.search().theme)
     };
 
     $scope.highlightPackage = $location.search().hl;
