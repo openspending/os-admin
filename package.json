@@ -18,7 +18,8 @@
     "js-polyfills": "^0.1.12",
     "lodash": "^4.6.1",
     "os-bootstrap": "git+https://github.com/openspending/os-bootstrap.git",
-    "os-mockups": "git+https://github.com/smth/os-mockups.git"
+    "os-mockups": "git+https://github.com/smth/os-mockups.git",
+    "os-styles": "0.0.1"
   },
   "devDependencies": {
     "express": "^4.14.0",
