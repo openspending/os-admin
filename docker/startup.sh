@@ -10,11 +10,11 @@ if [ ! -z "$GIT_REPO" ]; then
         git checkout origin/$GIT_BRANCH
     fi
     cd /remote && npm install && npm run build
-    cat config.js | sed s/next.openspending.org/staging.openspending.org/ > config.js.tmp
+    cat config.js | sed s~/openspending.org~/staging.openspending.org~ > config.js.tmp
     mv -f config.js.tmp config.js
 else
     ( cd /repos/os-admin && npm install && npm run build  &&
-      cat config.js | sed s/next.openspending.org/dev.openspending.org/ > config.js.tmp &&
+      cat config.js | sed s~/openspending.org~/dev.openspending.org~ > config.js.tmp &&
       mv -f config.js.tmp config.js
     ) || true
 fi

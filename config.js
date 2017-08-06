@@ -1,9 +1,9 @@
 window.globalConfig = {
-  conductorUrl: "https://next.openspending.org",
-  searchUrl: "https://next.openspending.org/search/package",
-  viewerUrl: "https://next.openspending.org/viewer",
-  explorerUrl: "https://next.openspending.org/explorer",
-  packagerUrl: "https://next.openspending.org/packager",
+  conductorUrl: "https://openspending.org",
+  searchUrl: "https://openspending.org/search/package",
+  viewerUrl: "https://openspending.org/viewer",
+  explorerUrl: "https://openspending.org/",
+  packagerUrl: "https://openspending.org/packager",
   snippets: {
     ga: null
   }
