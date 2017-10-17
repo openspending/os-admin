@@ -1,4 +1,4 @@
-FROM node:7-alpine
+FROM node:8-alpine
 
 RUN apk add --update git 
 RUN git clone http://github.com/openspending/os-admin.git app
