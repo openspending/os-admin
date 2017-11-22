@@ -22,7 +22,5 @@ OpenSpending user administration page
 - run the application...
 `npm start`
 
-- ... or just open index.html in your favorite browser 
-
 (when working locally you'll need to change the `<base href='admin'>` element in index.html to be `/`.
 

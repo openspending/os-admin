@@ -47,7 +47,7 @@
     "zombie": "^4.2.1"
   },
   "scripts": {
-    "start": "xdg-open index.html",
+    "start": "node server.js",
     "test": "mocha tests/*.js",
     "posttest": "npm run review",
     "review": "eslint app tests gulpfile.js webpack.config.js",
