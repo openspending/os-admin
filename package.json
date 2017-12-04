@@ -19,7 +19,8 @@
     "lodash": "^4.6.1",
     "os-bootstrap": "git+https://github.com/openspending/os-bootstrap.git",
     "os-mockups": "git+https://github.com/smth/os-mockups.git",
-    "os-styles": "^0.0.2"
+    "os-styles": "^0.0.2",
+    "raven-js": "^3.20.1"
   },
   "devDependencies": {
     "express": "^4.14.0",
