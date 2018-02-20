@@ -1,9 +1,13 @@
 FROM node:8-alpine
 
-RUN apk add --update git 
-RUN git clone http://github.com/openspending/os-admin.git app
-RUN cd app && npm install
-RUN cd app && npm run build
+RUN apk add --update git
+
+WORKDIR /app
+ADD package.json .
+RUN npm install
+
+ADD . .
+RUN npm run build
 
 EXPOSE 8000
 
