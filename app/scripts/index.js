@@ -20,26 +20,9 @@ var _ = require('lodash');
 
   // Make config global available to app, and load scripts that require
   // globalConfig.
-  $.get('./config')
-  .then(function(res) {
-    globals.globalConfig = globals.globalConfig || {};
-    globals.globalConfig.conductorUrl = res.OS_CONDUCTOR_URL || res.OS_BASE_URL;
-    globals.globalConfig.explorerUrl = res.OS_EXPLORER_URL || res.OS_BASE_URL;
-    globals.globalConfig.searchUrl =
-      res.OS_SEARCH_URL || res.OS_BASE_URL + '/search/package';
-    globals.globalConfig.viewerUrl =
-      res.OS_VIEWER_URL || res.OS_BASE_URL + '/viewer';
-    globals.globalConfig.packagerUrl =
-      res.OS_PACKAGER_URL || res.OS_BASE_URL + '/packager';
-
-    // Add present snippet config to config object.
-    _.each(res, function(v, k) {
-      if (_.startsWith(k, 'OS_SNIPPETS_')) {
-        var snippetKey = _.toLower(_.replace(k, 'OS_SNIPPETS_', ''));
-        _.set(globals.globalConfig, 'snippets.' + snippetKey, v);
-      }
-    });
-
+  $.get('config.json')
+  .then(function(config) {
+    globals.globalConfig = Object.assign({}, globals.globalConfig, config);
     return globals.globalConfig;
   })
   .then(function(globalConfig) {
