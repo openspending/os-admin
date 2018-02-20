@@ -9,6 +9,8 @@ RUN npm install
 ADD . .
 RUN npm run build
 
+ENV OS_SNIPPETS_GA=UA-33874954-42
+
 EXPOSE 8000
 
 COPY docker/startup.sh /startup.sh
