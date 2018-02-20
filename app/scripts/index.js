@@ -20,7 +20,7 @@ var _ = require('lodash');
 
   // Make config global available to app, and load scripts that require
   // globalConfig.
-  $.get('./config.json')
+  $.get('./config')
   .then(function(res) {
     globals.globalConfig = globals.globalConfig || {};
     globals.globalConfig.conductorUrl = res.OS_CONDUCTOR_URL || res.OS_BASE_URL;
