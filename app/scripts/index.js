@@ -18,31 +18,30 @@ var _ = require('lodash');
 
   require('os-bootstrap/dist/js/os-bootstrap');
 
-  // Make config global available to app, and load scripts that require
+  // Make config global available to app, then load scripts that require
   // globalConfig.
   $.get('config.json')
-  .then(function(config) {
-    globals.globalConfig = Object.assign({}, globals.globalConfig, config);
-    return globals.globalConfig;
-  })
-  .then(function(globalConfig) {
-    // Load snippets (requires globalConfig)
-    $.getScript('./public/scripts/snippets.js')
-    .fail(function(jqxhr, settings, exception) {
-      throw(exception);
+    .then(function(config) {
+      globals.globalConfig = Object.assign({}, globals.globalConfig, config);
+      return globals.globalConfig;
+    })
+    .then(function(globalConfig) {
+      // Load snippets (requires globalConfig)
+      $.getScript('./public/scripts/snippets.js')
+        .fail(function(jqxhr, settings, exception) {
+          throw(exception);
+        });
+      return globalConfig;
+    })
+    .then(function(globalConfig) {
+      // Load externally hosted authClient.services lib (makes `authenticate`
+      // and `authorize` services available to angular modules).
+      var libUrl = globalConfig.conductorUrl + '/user/lib';
+      $.getScript(libUrl)
+        .fail(function(jqxhr, settings, exception) {
+          console.log('Unable to load authClient.services from ' + libUrl);
+        });
     });
-    return globalConfig;
-  })
-  .then(function(globalConfig) {
-    // Load externally hosted authClient.services lib (makes `authenticate` and
-    // `authorize` services available to angular modules).
-    var libUrl = globalConfig.conductorUrl + '/user/lib';
-    $.getScript(libUrl)
-    .fail(function(jqxhr, settings, exception) {
-      console.log('Unable to load authClient.services library from ' + libUrl);
-    });
-  });
-
 
   var angular = require('angular');
   globals.angular = angular;
