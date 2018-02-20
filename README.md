@@ -21,11 +21,14 @@ OpenSpending user administration page
 For local development, add an `.env` file with the following settings:
 ```ini
 # Required settings
-OS_BASE_URL= # e.g. https://openspending.org or http://localhost
+# e.g. https://openspending.org or http://localhost
+OS_BASE_URL=
 
 # Optional settings
-OS_SNIPPETS_GA= # Google Analytics code
-OS_SNIPPETS_RAVEN= # Sentry public DSN url
+# Google Analytics code
+OS_SNIPPETS_GA=
+# Sentry public DSN url
+OS_SNIPPETS_RAVEN=
 
 # Each service will use OS_BASE_URL unless overridden by these:
 OS_CONDUCTOR_URL=
