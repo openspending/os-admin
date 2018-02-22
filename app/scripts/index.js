@@ -33,7 +33,7 @@ var _ = require('lodash');
   var libUrl = globalConfig.conductorUrl + '/user/lib';
   $.getScript(libUrl)
     .fail(function(jqxhr, settings, exception) {
-      console.log('Unable to load authClient.services from ' + libUrl);
+      throw Error('Unable to load authClient.services from ' + libUrl);
     })
     .done(function() {
       require('./application');
