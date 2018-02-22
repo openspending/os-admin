@@ -8,6 +8,10 @@ var _ = require('lodash');
 // Init some global variables - needed for proper work of angular and
 // some other 3rd-party libraries
 (function(globals) {
+  if (globals.globalConfig === undefined) {
+    throw Error('Missing globalConfig object in the global scope');
+  }
+
   globals._ = _;
 
   var jquery = require('jquery');
@@ -24,30 +28,14 @@ var _ = require('lodash');
     globals.Promise = require('bluebird');
   }
 
-  // Make config global available to app, then load scripts that require
-  // globalConfig.
-  $.get('config.json')
-    .then(function(config) {
-      globals.globalConfig = Object.assign({}, globals.globalConfig, config);
-      return globals.globalConfig;
+  // Load externally hosted authClient.services lib (makes `authenticate`
+  // and `authorize` services available to angular modules).
+  var libUrl = globalConfig.conductorUrl + '/user/lib';
+  $.getScript(libUrl)
+    .fail(function(jqxhr, settings, exception) {
+      console.log('Unable to load authClient.services from ' + libUrl);
     })
-    .then(function() {
-      // Load snippets (requires globalConfig)
-      return $.getScript('public/scripts/snippets.js')
-        .fail(function(jqxhr, settings, exception) {
-          throw(exception);
-        });
-    })
-    .then(function() {
-      // Load externally hosted authClient.services lib (makes `authenticate`
-      // and `authorize` services available to angular modules).
-      var libUrl = globalConfig.conductorUrl + '/user/lib';
-      return $.getScript(libUrl)
-        .fail(function(jqxhr, settings, exception) {
-          console.log('Unable to load authClient.services from ' + libUrl);
-        });
-    })
-    .then(function() {
+    .done(function() {
       require('./application');
       angular.bootstrap(globals.document, ['Application']);
     });
