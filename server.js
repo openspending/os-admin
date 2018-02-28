@@ -23,12 +23,12 @@ app.get('/config.js', function(request, response) {
     });
 
     // Build application configuration object
+    var conductorUrl = config.OS_CONDUCTOR_URL || config.OS_BASE_URL;
     var appConfig = {
-        conductorUrl: config.OS_CONDUCTOR_URL || config.OS_BASE_URL,
+        conductorUrl: conductorUrl,
         explorerUrl: config.OS_EXPLORER_URL || config.OS_BASE_URL,
         viewerUrl: config.OS_VIEWER_URL || config.OS_BASE_URL + '/viewer',
-        searchUrl:
-            config.OS_SEARCH_URL || config.OS_BASE_URL + '/search/package',
+        searchUrl: conductorUrl + '/search/package',
         packagerUrl:
             config.OS_PACKAGER_URL || config.OS_BASE_URL + '/packager'
     };

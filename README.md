@@ -32,7 +32,6 @@ OS_SNIPPETS_RAVEN=
 
 # Each service will use OS_BASE_URL unless overridden by these:
 OS_CONDUCTOR_URL=
-OS_SEARCH_URL=
 OS_VIEWER_URL=
 OS_EXPLORER_URL=
 OS_PACKAGER_URL=
