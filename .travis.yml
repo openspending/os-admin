@@ -1,4 +1,29 @@
-language: node_js
+language: generic
 
-node_js:
-  - '8.7.0'
+services:
+  - docker
+
+env:
+  global:
+    # DOCKER_USERNAME
+    - secure: kqbXt4knasJ/Edrw3S+yPKDspXZz50UYktuZM+QLMSZ1V27Q/pnFuT4nNWRwFo5wEiKqTDiF30UrmAmdDGHxM4LpligUOBRcaGtXTca78BHe2FRCS/BvfaAiJ1zTM1k4IFFlyJ/6PZlESWoQtq6w2I+OAZShdB97W5OBkE49Nd1up6x3cfPPOCY1ofUx9atBKVksRWF7joV+w+tBdv8a7YivLDUAQC5SA7ow8HzkGDX6FfrinGgJo5SwYzT5yKVpYuQWLYmkyctdre4g85FUULFgfFRjS6vCep9YUej3C+3aAUYnGkroMBVQ/TkNN6kbXI3ntbUaq5TIo/2AcLniwkyA6sHDZMxSu9manQNymaqWiZO+mYsNTTWrZRcVqsWLz6d/sCKhaggHdRo0g1eNaOWG3Rpna8QaWb92mB+F3a8nYQ5+337XJu8EymVhpuRLi8LBBD+GygQb3JxmsyzopdYgDH4i9m+mW7ihvTbdfdUo1Q26MpZ6bhL7v4rBwzg47t16XFBSCjncLA5frFhpg/+ecqBHhDnftZWFlNFO/LlsPRUNF1b+fgOLXLXf5I0zERFcXxCOOtOROZZXnKGHWAsk291ukYKc/PjKau4ASU91zirRSAuhNJpFVCn9/u4xQ+ln2ycc10DrM98oVI2qhOohzCcvIYNCGYnJKHF2rvs=
+    # DOCKER_PASSWORD
+    - secure: C6nZ9Pd2NirC3CXEKg1RCZnMYo0u/MmfgccuZ1f2+PCVn6Bq/JpQhhZk9M6G/OZR737fn4Pyk0WCAU3m/tHcGTrOKMKGBf7MXfLW9kJCXBsNcSVr6itrfgEOjpGGdn2QMNhYJa5ytI8rYdwflhRL3dscIKJmyB+mVYAu4WgQ3+WZc450LuwJvYaiu6DmPtCL+3VBjaBJk242etLX/8QSujOWwT2Ewd+fJVbbYwZ/yd0Exry63q9fTc83oesU8HtUVysLZFrmyPt7nDNo74utIWkXXnipnmSX4/7CFKF19kuxq2alNcY13uSiQVDUZ1cLtvbWmO2coJ+dSm+XOnaiYmu/6fVDynGZHlA/UE/FLIXdJEub7TJXpc1nE1z/NLWLKMueVY9yZYEQxXnlRKO5ZC3/W0gs7ENEenK4APwtf0w98XiDz27+iUdp++mhF1t6NteWHyc5JXuZsX3IGhSW+cwjAGb4GcWD6yEMnzSsOraH/9J5tY5vNI+ZE7x8NT+1oQk1mFu+fRKn0bxnp7cK9bntmbuaarLoBa+PwoJeOH5GBHfsZgDQYZo1GLeJZJ4LL9xSSI/pZu0mr7vaIeD3j69Oqsxwdy2LQGEaWljk++OwkiqJRuHYV30upmgaMtrVTYSyhK25MmjmbNhlUQtG5i/FEAUdSbIT9gBHguhvXcY=
+
+install:
+  - make ci-build
+  # Run docker image with additional args
+  - make ci-run RUN_ARGS="-e OS_BASE_URL=http://localhost"
+
+script:
+  - make ci-test
+
+after_success:
+  - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then make ci-push-tag TAG="${TRAVIS_PULL_REQUEST_BRANCH////_}"; fi'
+
+deploy:
+  # deploy master to latest tag
+  - provider: script
+    script: make ci-push
+    on:
+      branch: master
