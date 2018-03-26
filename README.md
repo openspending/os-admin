@@ -43,5 +43,5 @@ OS_PACKAGER_URL=
 - run the application...
 `npm start`
 
-(when working locally you'll need to change the `<base href='admin'>` element in index.html to be `/`.
+(when working locally you'll need to change the `<base href='/admin/'>` element in index.html to be `/`.
 
