@@ -1,8 +1,8 @@
 {
   "header": {
      "logo": {
-      "icon": "public/assets/OS.svg",
-      "image": "public/assets/Admin.svg"
+      "icon": "assets/OS.svg",
+      "image": "assets/Admin.svg"
     }
   }
 }

@@ -5,7 +5,7 @@ var env = require('dotenv').load();
 var envConfig = require('./lookenv.config');
 
 
-app.use(express.static('.'));
+app.use(express.static(__dirname + '/public'));
 
 app.get('/config.js', function(request, response) {
     /*
