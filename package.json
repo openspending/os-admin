@@ -26,10 +26,10 @@
     "raven-js": "^3.20.1"
   },
   "devDependencies": {
-    "express": "^4.14.0",
     "chai": "^3.4.0",
     "eslint": "^3.12.0",
     "eslint-config-google": "^0.7.1",
+    "express": "^4.14.0",
     "file-loader": "^0.9.0",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
@@ -41,6 +41,7 @@
     "json-loader": "^0.5.4",
     "mocha": "^2.3.3",
     "nock": "^8.0.0",
+    "nodemon": "^1.17.2",
     "raw-loader": "^0.5.1",
     "resolve": "^1.1.6",
     "stringify": "^5.1.0",
@@ -52,6 +53,7 @@
   },
   "scripts": {
     "start": "lookenv --dotenv -- node server.js",
+    "start:dev": "lookenv --dotenv -- nodemon server.js",
     "test": "mocha tests/*.js",
     "posttest": "npm run review",
     "review": "eslint app tests gulpfile.js webpack.config.js",
