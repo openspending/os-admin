@@ -329,7 +329,8 @@ function runWebHooks(permissionToken, dataPackage) {
 
   var data = _.chain({
       jwt: permissionToken,
-      id: dataPackage.id
+      id: dataPackage.id,
+      pipeline: 'https://apps.openbudgets.eu/linkedpipes/execute/fdp2rdf'
     })
     .map(function(value, key) {
       return encodeURIComponent(key) + '=' + encodeURIComponent(value);
