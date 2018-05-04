@@ -63,7 +63,7 @@
           </li>
           <li class="edit" ng-if="!!packagerUrl">
             <a data-toggle="tooltip" bootstrap-tooltip data-placement="top" title="Edit"
-               ng-href="{{ packagerUrl + '/provide-data/?package=' + package.url }}" target="_blank"><svg><use xlink:href="#icon-edit" /></svg><span>Edit</span></a>
+               ng-href="{{ packagerUrl + '/provide-data/?package=' + package.url }}"><svg><use xlink:href="#icon-edit" /></svg><span>Edit</span></a>
           </li>
           <li class="delete" ng-if="!!packagerUrl">
             <a data-toggle="popover" confirmation-popover data-on-click="deletePackage(package.id)"
@@ -71,7 +71,7 @@
           </li>
           <li class="view" ng-if="!!viewerUrl && package.loadingStatus.loaded">
             <a data-toggle="tooltip" bootstrap-tooltip data-placement="top" title="View"
-              ng-href="{{ viewerUrl + '/' + package.id }}" target="_blank"><svg><use xlink:href="#icon-open" /></svg><span>View</span></a>
+              ng-href="{{ viewerUrl + '/' + package.id }}"><svg><use xlink:href="#icon-open" /></svg><span>View</span></a>
           </li>
           <li class="download context" ng-init="dropdown.isDownloadVisible = false">
             <a data-toggle="tooltip" bootstrap-tooltip ng-click="dropdown.isDownloadVisible = !dropdown.isDownloadVisible" data-placement="top" title="Download">
