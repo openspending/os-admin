@@ -10,7 +10,7 @@ module.exports = [
     isPublished: true,
     last_update: 0,
     author: 'Levko Kravets',
-    url: 'https://s3.amazonaws.com/datastore.openspending.org/' +
+    url: 'http://s3.amazonaws.com/datastore.openspending.org/' +
       '583b10ad15f2e7f078afd3431c2c09ea/test/datapackage.json',
     totalCountOfResources: 1,
     totalCountOfRecords: 0,
@@ -28,7 +28,7 @@ module.exports = [
     resources: [
       {
         name: 'boost-moldova-all',
-        url: 'https://s3.amazonaws.com/datastore.openspending.org/' +
+        url: 'http://s3.amazonaws.com/datastore.openspending.org/' +
           '583b10ad15f2e7f078afd3431c2c09ea/test/boost-moldova-all.csv'
       }
     ]
@@ -42,7 +42,7 @@ module.exports = [
     isPublished: true,
     last_update: 0,
     author: 'Levko Kravets',
-    url: 'https://s3.amazonaws.com/datastore.openspending.org/' +
+    url: 'http://s3.amazonaws.com/datastore.openspending.org/' +
       '583b10ad15f2e7f078afd3431c2c09ea/test2/datapackage.json',
     totalCountOfResources: 1,
     totalCountOfRecords: 0,
@@ -60,7 +60,7 @@ module.exports = [
     resources: [
       {
         name: 'test',
-        url: 'https://s3.amazonaws.com/datastore.openspending.org/' +
+        url: 'http://s3.amazonaws.com/datastore.openspending.org/' +
           '583b10ad15f2e7f078afd3431c2c09ea/test2/test.csv'
       }
     ]
