@@ -31,7 +31,7 @@
     </tr>
     <tr ng-repeat="package in (packages | filter:filter) track by package.id"
       ng-class="{highlighted: package.id == highlightPackage}" class="clearfix">
-      <td><span>{{ package.title }}</span></td>
+      <td><a ng-href="{{ viewerUrl + '/' + package.id }}">{{ package.title }}</a></td>
       <td class="status" ng-if="package.isPublished"><span class="label label-primary">Published</span></td>
       <td class="status" ng-if="!package.isPublished"><span class="label label-warning">Private</span></td>
       <td class="status" ng-if="package.id == highlightPackage"><span class="label label-success">New</span></td>
