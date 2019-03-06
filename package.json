@@ -66,7 +66,7 @@
     "url": "git+https://github.com/openspending/os-admin.git"
   },
   "author": {
-    "name": "Open Knowledge",
+    "name": "Open Knowledge International",
     "email": "info@okfn.org",
     "url": "https://okfn.org/"
   },
@@ -78,7 +78,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/openspending/os-admin/issues"
+    "url": "https://github.com/openspending/openspending/issues"
   },
   "homepage": "https://github.com/openspending/os-admin#readme"
 }

@@ -1,10 +1,14 @@
 # os-admin
 
+[![Build Status](https://travis-ci.org/openspending/os-admin.svg?branch=master)](https://travis-ci.org/openspending/os-admin)
 [![Gitter](https://img.shields.io/gitter/room/openspending/chat.svg)](https://gitter.im/openspending/chat)
 [![Issues](https://img.shields.io/badge/issue-tracker-orange.svg)](https://github.com/openspending/openspending/issues)
 
-OpenSpending user administration page
-   
+Provides a web interface for users to administer packages hosted on Openspending; links to edit, delete, open in [os-viewer](https://github.com/openspending/os-viewer).
+
+- [AngularJS](https://angularjs.org/)
+- [ExpressJS](https://expressjs.com/)
+
 ## Quick start
 
 - get the code
